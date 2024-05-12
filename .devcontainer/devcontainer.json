@@ -17,13 +17,11 @@
 		"ghcr.io/robbert229/devcontainer-features/postgresql-client:1": {
 			"version": "13"
 		},
-		"ghcr.io/devcontainers/features/docker-in-docker:2": {
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
 			"moby": true,
-			"azureDnsAutoDetection": true,
 			"installDockerBuildx": true,
-			"installDockerComposeSwitch": true,
 			"version": "latest",
-			"dockerDashComposeVersion": "latest"
+			"dockerDashComposeVersion": "v2"
 		}
 	},
 
