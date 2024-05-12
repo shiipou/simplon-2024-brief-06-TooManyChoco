@@ -27,7 +27,7 @@ Want to start developing on the project the quickest way ?
 
 Use this button to open a coder workspace with everything already configured.
 
-[![Open in Coder](https://code.nocturlab.fr/open-in-coder.svg)](https://code.nocturlab.fr/templates/dev-container/workspace?mode=auto&param.repo=custom&param.custom_repo=https%3A%2F%2Fgithub.com%2Fshiipou%2Fsimplon-2024-brief-06-TooManyChoco&param.devcontainer_dir=.devcontainer&param.cpu=2&param.memory=2&param.home_disk_size=10)
+[![Open in Coder](https://code.nocturlab.fr/open-in-coder.svg)](https://code.nocturlab.fr/templates/dev-container/workspace?mode=manual&param.repo=custom&param.custom_repo=https%3A%2F%2Fgithub.com%2Fshiipou%2Fsimplon-2024-brief-06-TooManyChoco&param.devcontainer_dir=.devcontainer&param.cpu=2&param.memory=2&param.home_disk_size=10)
 
 ### Dependencies
 
