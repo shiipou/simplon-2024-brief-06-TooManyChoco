@@ -34,6 +34,8 @@ Use this button to open a coder workspace with everything already configured.
 If you choose to not use the previous button, you'll need to install the following :
 
 - Java (JDK) >= 17
+- PostgreSQL >= 13
+    - Start the devcontainer postgreSQL services : `docker compose -f .devcontainer/services.yml up -d`
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
