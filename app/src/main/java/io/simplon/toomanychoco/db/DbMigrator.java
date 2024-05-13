@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DbMigrator {
-    private static final String MIGRATION_SCRIPTS_DIR = "src/main/resources/";
+    private static final String MIGRATION_SCRIPTS_DIR = "./migrations";
     private static final String MIGRATION_TABLE_NAME = "migrations";
 
     private Connection connection;
