@@ -1,4 +1,4 @@
-fgpackage io.simplon.toomanychoco;
+package io.simplon.toomanychoco;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
