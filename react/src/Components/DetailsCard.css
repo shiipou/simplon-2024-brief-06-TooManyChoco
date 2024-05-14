@@ -1,0 +1,27 @@
+.content {
+  height: 364px;
+  width: 289px;
+  border-radius: 10%;
+  background-color: rgb(198, 34, 34);
+}
+
+.content h1 {
+  color: white;
+  margin-left: 10px;
+  margin-block-end: 2px;
+}
+
+.content p {
+  color: white;
+  margin: 10px;
+  font-size: 15px;
+  margin-top: 1px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  width: 1440px;
+  height: 1024px;
+  align-items: center;
+}
