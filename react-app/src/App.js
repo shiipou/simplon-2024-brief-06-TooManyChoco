@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div className='app'>
-      <div className='calendar-container'>
+      <div className='calendar-container myCustomCalendar'>
         <Calendar onChange={setDate} value={date} />
         {console.log(Calendar)}
       </div>
