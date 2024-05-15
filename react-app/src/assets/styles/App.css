@@ -51,6 +51,7 @@
 
 .react-calendar__navigation__label__labelText--from {
   font-family: "Pacifico", cursive;
+  text-shadow: 2px 2px 0px rgb(206, 206, 206);
 }
 
 .react-calendar__month-view__weekdays__weekday abbr {
