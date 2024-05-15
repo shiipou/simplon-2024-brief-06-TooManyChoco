@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import './styles/App.css';
 import Calendar from 'react-calendar';
+import './assets/styles/App.css';
+import 'react-calendar/dist/Calendar.css';
 
 function App() {
   const [date, setDate] = useState(new Date());
@@ -9,7 +10,6 @@ function App() {
     <div className='app'>
       <div className='calendar-container'>
         <Calendar onChange={setDate} value={date} />
-        {console.log(date)}
       </div>
     </div>
   );
