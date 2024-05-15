@@ -22,6 +22,11 @@
 			"installDockerBuildx": true,
 			"version": "latest",
 			"dockerDashComposeVersion": "v2"
+		},
+		"ghcr.io/devcontainers/features/node:1": {
+			"nodeGypDependencies": true,
+			"version": "lts",
+			"nvmVersion": "latest"
 		}
 	},
 
