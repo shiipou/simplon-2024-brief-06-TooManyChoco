@@ -14,52 +14,41 @@
 
 .react-calendar__navigation__label {
   font-size: large;
-
 }
 
-.react-calendar__navigation__arrow, react-calendar__navigation__next-button {
+.react-calendar__navigation__arrow,
+react-calendar__navigation__next-button {
   font-size: 25px;
   color: rgb(198, 34, 34);
 }
 
-.react-calendar__tile.react-calendar__tile--active,
-.react-calendar__tile.react-calendar__tile--active:enabled:hover,
-.react-calendar__tile.react-calendar__tile--active:enabled:focus
-{
-  color: unset;
-  background: unset;
-}
-.react-calendar__tile.react-calendar__month-view__days__day--weekend.react-calendar__tile,
-.react-calendar__tile.react-calendar__month-view__days__day--weekend.react-calendar__tile:enabled:hover,
-.react-calendar__tile.react-calendar__month-view__days__day--weekend.react-calendar__tile:enabled:focus
-{
-  color: unset;
-  background: #a7a7a7;
-}
-
-.react-calendar__tile, react-calendar__tile--now react-calendar__tile--active react-calendar__tile--range, react-calendar__tile--rangeStart react-calendar__tile--rangeEnd, react-calendar__tile--rangeBothEnds, react-calendar__month-view__days__day {
+.react-calendar__tile,
+react-calendar__tile--now
+  react-calendar__tile--active
+  react-calendar__tile--range,
+react-calendar__tile--rangeStart react-calendar__tile--rangeEnd,
+react-calendar__tile--rangeBothEnds,
+react-calendar__month-view__days__day {
   border-radius: 10px;
 }
 
 .myCustomCalendar .react-calendar button {
   margin: 5px 0;
-
 }
 
 .react-calendar__navigation__label__labelText--from {
-  font-family: 'Pacifico', cursive;
-  text-shadow: 1.5px 1.5px 0px rgb(223, 223, 223);
+  font-family: "Pacifico", cursive;
 }
 
 .react-calendar__month-view__weekdays__weekday abbr {
-  font-family: 'Pacifico', cursive;
+  font-family: "Pacifico", cursive;
   font-weight: 400;
   color: rgb(198, 34, 34);
 }
 
 .myCustomCalendar .react-calendar__month-view__days__day--weekend {
-  border-left : white solid 2px;
-  border-right : white solid 2px;
+  border-left: white solid 2px;
+  border-right: white solid 2px;
 }
 
 .react-calendar__month-view__days button {
@@ -74,24 +63,23 @@
   text-align: center;
 }
 
-.react-calendar__navigation{
-    text-align: center;
+.react-calendar__navigation {
+  text-align: center;
 }
 
 element.style {
-    border-left: red solid;
-    padding: 0.5em;
-    border-top: red solid;
+  border-left: red solid;
+  padding: 0.5em;
+  border-top: red solid;
 }
 
 .myCustomCalendar .react-calendar__tile--now {
   border-top: solid red;
   border-right: solid red;
-  background:white;
-  color:black;
-  font-weight:800;
+  background: white;
+  color: black;
+  font-weight: 800;
 }
-
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -126,5 +114,4 @@ element.style {
 /* media-queires pour l'affichage du tableau de film en bas de page */
 
 @media screen and (max-width: 1200px) {
-  
 }
