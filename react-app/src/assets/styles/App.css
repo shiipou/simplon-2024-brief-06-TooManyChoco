@@ -57,6 +57,11 @@
   color: rgb(198, 34, 34);
 }
 
+.react-calendar__tile.react-calendar__month-view__days__day--weekend {
+  border-left: white solid 2px;
+  border-right: white solid 2px;
+}
+
 .react-calendar__month-view__days button {
   height: 60px;
   display: flex;
