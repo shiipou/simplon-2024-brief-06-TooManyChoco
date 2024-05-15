@@ -1,13 +1,10 @@
 * {
-  font-family: 'Roboto';
-  /* font-family: "Pacifico", cursive;
-  font-weight: 400;
-  font-style: normal; */
+  font-family: "Roboto";
 }
 
 body {
   margin: 0;
-  font-family: 'Roboto', 'Pacifico', sans-serif;
+  font-family: "Roboto", "Pacifico", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(240, 240, 240);
@@ -44,4 +41,3 @@ html {
     width: 1000px;
   }
 }
-
