@@ -7,6 +7,14 @@
   pointer-events: none;
 }
 
+.text-center {
+  text-align: center;
+}
+
+.react-calendar__navigation{
+    text-align: center;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
