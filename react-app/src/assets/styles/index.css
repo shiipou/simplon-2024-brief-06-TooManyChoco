@@ -25,4 +25,23 @@ html {
   height: 100%;
 }
 
+/* media-queires pour l'affichage du tableau de film en bas de page */
+
+@media screen and (min-width: 600px) {
+  .myCustomCalendar .react-calendar {
+    width: 600px;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .myCustomCalendar .react-calendar {
+    width: 800px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .myCustomCalendar .react-calendar {
+    width: 1000px;
+  }
+}
 
