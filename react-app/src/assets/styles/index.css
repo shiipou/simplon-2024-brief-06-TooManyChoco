@@ -7,7 +7,7 @@
 
 body {
   margin: 0;
-  font-family: 'Times New Roman', Times,'Roboto', 'Pacifico', sans-serif;
+  font-family: 'Roboto', 'Pacifico', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(240, 240, 240);
@@ -16,7 +16,6 @@ body {
 
 html {
   height: 100%;
-  font-family: 'Times New Roman';
 }
 
 #root {
@@ -24,7 +23,6 @@ html {
   justify-content: center;
   align-items: center;
   height: 100%;
-  font-family: 'Times New Roman';
 }
 
 
