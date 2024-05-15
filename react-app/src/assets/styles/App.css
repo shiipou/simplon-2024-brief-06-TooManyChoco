@@ -32,6 +32,8 @@
 .react-calendar__tile.react-calendar__month-view__days__day--weekend.react-calendar__tile:enabled:focus {
   color: unset;
   background: #a7a7a7;
+
+  
 }
 
 .react-calendar__tile.react-calendar__tile--now:hover {
