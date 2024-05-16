@@ -10,16 +10,15 @@ const LoginForm = () => {
           type="email"
           name="email"
           className="form-control"
-          id=""
-          placeholder="Entrez votre adresse email..."
+          placeholder="Entrez votre adresse email"
         />
         <label>Mot de passe</label>
         <input
           type="password"
           name="password"
-          id="inputPassword5"
           className="form-control"
-          aria-describedby="Entrez votre mot de passe..."
+          placeholder="Entrez votre adresse email"
+          aria-describedby="passwordHelpBlock"
         />
         <div>
           <button type="submit">Se connecter</button>
