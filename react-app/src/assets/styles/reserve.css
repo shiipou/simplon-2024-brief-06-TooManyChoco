@@ -13,8 +13,9 @@
 }
 
 .react-calendar__tile.reserved::after {
-    /* 🥐​;    */
-    content: '\1F950';
+    /* 🥐​; '\1F950'   */
+    content: '\01F4CA';
+    font-size: 20px;
     position: absolute;
     display: block;
     top: 50%;
