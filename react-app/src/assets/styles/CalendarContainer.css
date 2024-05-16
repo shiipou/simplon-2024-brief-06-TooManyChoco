@@ -1,12 +1,4 @@
 /* CSS Calendar */
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
 .react-calendar {
   border-radius: 50px;
@@ -38,11 +30,21 @@
 
 .react-calendar__tile.react-calendar__tile--now:hover {
   color: unset;
-  background: #e6e6e6;
+  background: #e6e6e6 !important;
+}
+
+.react-calendar__tile.react-calendar__month-view__days__day--weekend:hover {
+  color: unset;
+  background: #e6e6e6 !important;
 }
 
 .react-calendar__month-view__days__day {
   border-radius: 10px;
+}
+
+.react-calendar__tile.react-calendar__tile--active {
+  content: "Texte à ajouter";
+  color: black;
 }
 
 .myCustomCalendar .react-calendar button {
@@ -94,33 +96,22 @@ element.style {
   font-weight: 800;
 }
 
-/* CSS de React Calendar */
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+/* media-queries pour l'affichage du tableau de film en bas de page */
+
+@media screen and (min-width: 600px) {
+  .myCustomCalendar .react-calendar {
+    width: 600px;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media screen and (min-width: 800px) {
+  .myCustomCalendar .react-calendar {
+    width: 800px;
   }
-  to {
-    transform: rotate(360deg);
+}
+
+@media screen and (min-width: 1000px) {
+  .myCustomCalendar .react-calendar {
+    width: 1000px;
   }
 }

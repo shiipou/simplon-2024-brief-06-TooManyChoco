@@ -7,7 +7,7 @@ body {
   font-family: "Roboto", "Pacifico", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(240, 240, 240);
+  background-color: white;
   height: 100%;
 }
 
@@ -20,24 +20,4 @@ html {
   justify-content: center;
   align-items: center;
   height: 100%;
-}
-
-/* media-queries pour l'affichage du tableau de film en bas de page */
-
-@media screen and (min-width: 600px) {
-  .myCustomCalendar .react-calendar {
-    width: 600px;
-  }
-}
-
-@media screen and (min-width: 800px) {
-  .myCustomCalendar .react-calendar {
-    width: 800px;
-  }
-}
-
-@media screen and (min-width: 1000px) {
-  .myCustomCalendar .react-calendar {
-    width: 1000px;
-  }
 }
