@@ -50,7 +50,7 @@
   border-radius: 10px;
 }
 
-.react-calendar__tile.react-calendar__tile--active{
+.react-calendar__tile.react-calendar__tile--active {
   content: "Texte à ajouter";
   color: black;
 }
