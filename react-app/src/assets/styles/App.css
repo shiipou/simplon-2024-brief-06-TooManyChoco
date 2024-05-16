@@ -84,7 +84,7 @@ element.style {
   border-top: red solid;
 }
 
-.myCustomCalendar .react-calendar__tile--now {
+.myCustomCalendar .react-calendar__tile--now  {
   border-top: solid red;
   border-right: solid red;
   background: white;
