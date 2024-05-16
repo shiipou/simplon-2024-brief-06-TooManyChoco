@@ -30,8 +30,7 @@ public class UserRepository {
 	}
 
 	public Optional<User> findByUsername(String search) {
-		try (
-				PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_USERNAME);) {
+		try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_USERNAME);) {
 			statement.setString(1, search);
 			ResultSet resultSet = statement.executeQuery();
 
