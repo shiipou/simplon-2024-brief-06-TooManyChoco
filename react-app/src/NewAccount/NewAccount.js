@@ -1,13 +1,13 @@
 // NewAccount.js
 import React from 'react';
-import './NewAccount.css';
+import '../styles/NewAccount.css';
 
 const NewAccount = () => {
    return (
    <div className="main-container">
      <div className="form-container">
        <h2>Créer un compte</h2>
-       <form>
+       <form className="form-mini-container">
          <div>
            <label htmlFor="pseudo">Pseudo :</label>
            <input type="text" id="pseudo" name="pseudo" />
