@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import handleFetch from "../Services/HandleFetch"; // Service pour gérer les requêtes
+import handleFetch from "../Services/eventService"; // Service pour gérer les requêtes
 import { FaUser } from "react-icons/fa"; // Icône utilisateur
 import { GiCroissant } from "react-icons/gi"; // Icône croissant
 import "./DetailsCard.css"; // Style pour DetailsCard

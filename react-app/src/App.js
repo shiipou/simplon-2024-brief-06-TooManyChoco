@@ -1,11 +1,8 @@
-import logo from './logo.svg';
-import './App.css';
-import DetailsCard from './Components/DetailsCard';
+import "./App.css";
+import DetailsCard from "./Components/DetailsCard";
 
 function App() {
-  return (
-    <DetailsCard></DetailsCard>
-  );
+  return <DetailsCard></DetailsCard>;
 }
 
 export default App;
