@@ -9,13 +9,11 @@ const PageFormulaires = () => {
 
     return (
         <div >
-            <h1>PAGE FORMULAIRE</h1>
+            <h1>Création événement</h1>
             <div className='container'>
                 <Formulaire titre= {titre1}/>
                 <Formulaire titre= {titre2}/>
             </div>
-            
-
         </div>
     );
 };
