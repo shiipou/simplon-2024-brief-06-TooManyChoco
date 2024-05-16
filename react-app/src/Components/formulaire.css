@@ -1,0 +1,92 @@
+.formBox {
+  box-sizing: border-box;
+  min-height: 300px;
+  width: 400px;
+  background-color: #ffffff;
+  border: 1px solid;
+  border-color: #c62222;
+  border-radius: 50px;
+  height: 302px;
+  left: -1px;
+  position: relative;
+  top: -1px;
+  margin: 10px;
+}
+
+.formBox .formBox_title {
+  text-align: center;
+  color: #797979;
+  margin: 10px;
+}
+
+form {
+  text-align: center;
+}
+
+.formBox_choiceInput {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+
+.formBox .formBox_input {
+  height: 40px;
+  border-radius: 50px 0px 0px 50px;
+  border: none;
+  background-color: #eedada;
+  padding: 0 0 0 12px;
+}
+
+.formBox .formBox_choiceButton {
+  color: #ffffff;
+  font-family: "Inter-Regular", Helvetica;
+  font-size: 21px;
+  font-weight: 400;
+  background-color: #c62222;
+  border-radius: 0px 50px 50px 0px;
+  height: 40px;
+  border: none;
+  width: 40px;
+  padding: 0;
+}
+
+.formBox input[type="submit"] {
+  border-radius: 50px;
+  border: none;
+  padding: 8px 15px 8px 15px;
+  margin: 10px 0 10px 0;
+  color: #ffffff;
+  background-color: #c62222;
+}
+
+.showResult {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.showChoice {
+  background-color: #eedada;
+  border-radius: 50px;
+  width: 162px;
+  margin: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  height: 1rem;
+  font-size: small;
+}
+
+.anonyme {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  align-items: center;
+}
+
+.anonyme p {
+  display: block;
+  padding: 10px;
+}
