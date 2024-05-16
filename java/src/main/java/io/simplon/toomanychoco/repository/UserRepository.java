@@ -18,6 +18,8 @@ public class UserRepository {
 	}
 
 	private static final String SQL_FIND_BY_USERNAME = "SELECT * FROM users WHERE username = ?";
+	private static final String SQL_CREATE_USER = "INSERT INTO users (username,firstname,email,password) VALUES (?,?,?,?)";
+
 
 	private Connection connection = null;
 
@@ -31,7 +33,7 @@ public class UserRepository {
 
 	public Optional<User> findByUsername(String search) {
 		try (
-				PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_USERNAME);) {
+			PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_USERNAME);) {
 			statement.setString(1, search);
 			ResultSet resultSet = statement.executeQuery();
 
@@ -45,6 +47,19 @@ public class UserRepository {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return Optional.empty();
+		}
+	}
+
+	public void createUser(User user){
+		try(
+			PreparedStatement statement = connection.prepareStatement(SQL_CREATE_USER);){
+			statement.setString(1, user.getUsername());
+			statement.setString(2, user.getFirstName());
+			statement.setString(3, user.geteMail());
+			statement.setString(4, user.getPassword());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 }
