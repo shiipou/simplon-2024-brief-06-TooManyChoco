@@ -7,6 +7,8 @@ import '../Styles/header.css';
 
 export default function Header() {
 
+    //utilisation d'un useState pour gérer l'état du menu burger
+
     const [showLinks, setShowLinks] = useState(false);
 
     const handleShowLinks = () => {
@@ -14,9 +16,9 @@ export default function Header() {
     }
 
     return (
-        <header className="navbar">
+        <header className={`navbar ${showLinks ? "show-nav" : "hide-nav"}`}> {/* ternaire pour ajouter afficher ou cacher la navbar en fonction de l'état de showLinks */}
                 <div className='logo-and-text-container'>
-                    <img src={logo} alt='logo'></img>
+                    <img className='logo' src={logo} alt='logo'></img>
                     <ul className="navbar-links">
                         <li className='navbar-item'>
                             <Link id="link_Styles" to="/"> Planning </Link> 

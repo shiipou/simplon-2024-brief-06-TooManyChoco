@@ -9,7 +9,7 @@ export default function Footer() {
             </div>
             <div className='footer-div'>
             <div className='footer-text'> ©TooManyChoco Campus Dev MAIF 2024</div>
-                <img className='img' src= {logo} lat = 'logo'/>
+                <img className='logo' src= {logo} lat = 'logo'/>
             </div>
         </footer>
 

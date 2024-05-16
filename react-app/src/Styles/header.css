@@ -1,24 +1,18 @@
-header{
+
+.navbar{
     display: flex;
     flex-direction: row;
     height: 20vh;
     background: rgb(198,34,34);
     justify-content: space-between;
     background: linear-gradient(-182deg,rgb(198, 34, 34),rgb(198, 34, 34) 69%,rgb(0, 0, 0,0.5) 70%,rgba(0, 0, 0, 0) 72%);
+    transition: all .8s ease-out;
+    
 }
 
-img{
+.logo{
     width: 15vh;
     height: 15vh;
-}
-
-.navbar-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    bottom: 1vh;
 }
 
 .logo-and-text-container {
@@ -59,6 +53,10 @@ li {
     transform: scale(1.3);
 }
 
+.logout-container{
+    padding-top: 2%;
+}
+
 #link_Styles {
     text-decoration: none;
     color: white
@@ -82,13 +80,20 @@ li {
 @media screen and (max-width: 767px) {
     
     .navbar{
-        height: 60vh;
         background: linear-gradient(-182deg,rgb(198, 34, 34),rgb(198, 34, 34) 69%,rgb(0, 0, 0,0.5) 70%,rgba(0, 0, 0, 0) 71%);
         flex-direction: column;
         justify-content:initial;
         align-items: center;
+        top: -100vw;
+        overflow: hidden;
     }
 
+    .hide-nav{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
     .logo-and-text-container {
         margin-top: 3vh;
         display: flex;
@@ -99,6 +104,7 @@ li {
     }
 
     .logout-container {
+        padding-top: 0;
         width: 4vh;
     }
 
@@ -106,14 +112,29 @@ li {
         width: 5vh;
         height: 5vh;
         margin: 0;
+        visibility: hidden;
     }
-    
     
     .navbar-links {
         flex-direction: column;
         justify-content: center;
         padding: 0;
-       
+        right: -100vw;
+        visibility: hidden;
+    }
+
+    .show-nav .navbar-links{
+        width: 100vw;
+        right: 0;
+        visibility: visible;
+    }
+
+    .show-nav .logout {
+        visibility: visible;
+    }
+
+    .show-nav {
+        height: 60vh;
     }
 
     .navbar-link {
@@ -125,8 +146,8 @@ li {
     .menu-burger {
         display: block;
         position: fixed;
-        top: 1rem;
-        right: 1rem;
+        top: 4%;
+        right: 4%;
     }
 
     .menu-burger:hover {
@@ -140,6 +161,7 @@ li {
         position: relative;
         border-radius: 3px;
         background: #fff;
+        transition: all .5s ease-in-out;
     }
 
     .burger-bar::before, .burger-bar::after {
@@ -155,4 +177,18 @@ li {
     .burger-bar::after {
         transform: translateY(12px);
     }
+
+    .show-nav .burger-bar{
+        background: transparent;
+        width: 0;
+    }
+
+    .show-nav .burger-bar::before{
+        transform: rotate(45deg);
+    }
+
+    .show-nav .burger-bar::after{
+        transform: rotate(-45deg);
+    }
+
   }

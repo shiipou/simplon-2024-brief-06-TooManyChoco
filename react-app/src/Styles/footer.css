@@ -9,7 +9,7 @@ footer{
 
 }
 
-.img {
+.logo {
 padding-top: 10px;
 justify-self: flex-end;}
 
@@ -34,27 +34,22 @@ justify-self: flex-end;}
       background: linear-gradient(-2deg,rgb(198, 34, 34),rgb(198, 34, 34) 69%,rgb(0, 0, 0,0.5) 70%,rgba(0, 0, 0, 0) 72%);
       }
 
-    .img {
+    .logo {
       padding-top: 25px;
       height:100px;
       width: auto;
       justify-self: flex-end;}
   }
 
-  .footer-div{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    justify-content: space-between;
-    width: 75%;
-      }
-
   .footer-text {
     margin-top: 5vh;
     color: white;
     font-size: 0.8rem;
   }
+
+  .footer-div{
+    width: 70%;
+      }
 
 
   
