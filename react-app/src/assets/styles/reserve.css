@@ -6,6 +6,7 @@
 
 .react-calendar__tile.reserved::after {
     /* 🥐​; '\1F950'   */
+    /* 📊​ */
     content: '\01F4CA';
     font-size: 20px;
     position: absolute;
