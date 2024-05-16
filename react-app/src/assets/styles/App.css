@@ -41,6 +41,11 @@
   background: #e6e6e6 !important;
 }
 
+.react-calendar__tile.react-calendar__month-view__days__day--weekend:hover {
+  color: unset;
+  background: #e6e6e6 !important;
+}
+
 .react-calendar__month-view__days__day {
   border-radius: 10px;
 }
