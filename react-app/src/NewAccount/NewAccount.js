@@ -18,7 +18,6 @@ const NewAccount = () => {
           <label htmlFor="password">Mot de passe :</label>
           <input type="password" id="password" name="password" />
         </div>
-        <button type="submit" style={{ backgroundColor: 'red', color: 'white' }}>Création de compte</button>
       </form>
       <button style={{ backgroundColor: 'red', color: 'white' }}>S'inscrire</button>
     </div>
