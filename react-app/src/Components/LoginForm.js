@@ -1,10 +1,14 @@
-import React from "react";
+import { useCallback } from "react";
 
 const LoginForm = () => {
+  const handleSubmit = useCallback(async (event) => {
+    event.preventDefault();
+  });
+
   return (
     <div>
       <h3>Connexion</h3>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label>Adresse</label>
         <input
           type="email"
