@@ -1,4 +1,23 @@
-.react-calendar__tile.react-calendar__month-view__days__day--weekend {
-  color: white;
-  background-color: #a7a7a7;
+/* .react-calendar__tile.react-calendar__month-view__days__day--weekend {
+    color: white;
+    background-color: #a7a7a7;
+} */
+
+/* .react-calendar__tile.react-calendar__month-view__days__day--reserved { */
+/* color: white; */
+/* background-color: #a7a7a7; */
+.react-calendar__tile.reserved {
+    position: relative;
+    border: red solid 5px;
+    border-radius: 10px;
+}
+
+.react-calendar__tile.reserved::after {
+    /* 🥐​;    */
+    content: '\1F950';
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
