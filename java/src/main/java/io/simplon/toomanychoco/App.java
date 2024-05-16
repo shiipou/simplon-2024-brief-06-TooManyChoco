@@ -40,7 +40,7 @@ public class App {
 
 		// Create a basic handler for index route ('/')
 		server.createContext("/", (request -> {
-			String response = "bye bye!";
+			String response = "Hello, world!";
 			request.sendResponseHeaders(200, response.getBytes().length);
 			request.getResponseBody().write(response.getBytes());
 			request.getResponseBody().close();
