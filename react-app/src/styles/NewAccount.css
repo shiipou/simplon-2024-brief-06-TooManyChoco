@@ -37,6 +37,7 @@
 }
 
 .form-container button {
+    display:flex;
   background-color: red;
   color: white;
   padding: 8px;
