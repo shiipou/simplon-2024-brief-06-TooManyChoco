@@ -67,8 +67,8 @@ public class App {
 
 				String response = String.format("Hello, %s", user.getFirstname());
 
-				request.sendResponseHeaders(200, response.getBytes().length);
-				request.getResponseBody().write(response.getBytes());
+				// request.sendResponseHeaders(200, response.getBytes().length);
+				// request.getResponseBody().write(response.getBytes());
 				request.getResponseBody().close();
 			} catch (IndexOutOfBoundsException error) {
 				String response = "Username parameter is missing. Example : `/hello/bob` will return `Hello, Bob!`.";
