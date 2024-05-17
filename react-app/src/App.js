@@ -1,17 +1,22 @@
-import { Route, Routes } from 'react-router-dom';
+
+import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import './App.css';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
+import PageFormulaires from './Pages/PageFormulaires';
+import DetailsCard from "./Components/DetailsCard";
+
 
 function App() {
   return (
-    <div className="App">
-      <Header/>
-      <Routes>
-        <Route path="/" element={(<main><p>Content</p></main>)}/>
-      </Routes>
-      <Footer/>
-    </div>
+    <BrowserRouter>
+          <Header/>
+            <Routes>
+              <Route path="/formulaire" element={<PageFormulaires/>} />
+              <Route path="/details" element={<DetailsCard/>} />
+            </Routes>
+          <Footer/>
+    </BrowserRouter>
   );
 }
 
