@@ -5,36 +5,13 @@ import java.util.List;
 
 public class Event {
 
-    // Attributs
-
-    private int event_id;
     private Date event_date;
+    private int event_id ;
     private User creator;
+
     private List<String> pastry_list;
-    private List<Pastry> pastries;
-    private boolean isAnonyme;
 
-    // Constructeurs
-
-    public Event() {
-
-    }
-
-    public Event(int event_id, Date event_date, User creator, List<Pastry> pastries, boolean isAnonyme) {
-        this.event_id = event_id;
-        this.event_date = event_date;
-        this.creator = creator;
-        this.pastries = pastries;
-        this.isAnonyme = isAnonyme;
-    }
-
-    public Event(int event_id, Date event_date, User creator) {
-        this.event_id = event_id;
-        this.event_date = event_date;
-        this.creator = creator;
-    }
-
-    public Event(int event_id, Date event_date, User creator, List<String> pastry_list) {
+    public Event(Date event_date, int event_id, User creator, List<String> pastry_list) {
         this.event_date = event_date;
         this.event_id = event_id;
         this.creator = creator;
@@ -45,7 +22,6 @@ public class Event {
 
     public Date getEvent_date() {
         return this.event_date;
-
     }
 
     public void setEvent_date(Date event_date) {
@@ -68,14 +44,6 @@ public class Event {
         this.creator = creator;
     }
 
-    public List<Pastry> getPastries() {
-        return pastries;
-    }
-
-    public void setPastries(List<Pastry> pastries) {
-        this.pastries = pastries;
-    }
-
     public List<String> getPastryList() {
         return this.pastry_list;
     }
@@ -86,17 +54,6 @@ public class Event {
 
     public void addPastry(String pastry_name) {
         pastry_list.add(pastry_name);
-
     }
-
-    public boolean getIsAnonyme() {
-        return isAnonyme;
-    }
-
-    public void setAnonyme(boolean isAnonyme) {
-        this.isAnonyme = isAnonyme;
-    }
-
-
 
 }
