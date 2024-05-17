@@ -1,0 +1,23 @@
+* {
+  font-family: "Roboto";
+}
+
+body {
+  margin: 0;
+  font-family: "Roboto", "Pacifico", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: white;
+  height: 100%;
+}
+
+html {
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
