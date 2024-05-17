@@ -10,6 +10,10 @@ public class User {
 		this.firstName = firstName;
 	}
 
+	public User() {
+		
+	}
+
 	public String getUsername() {
 		return username;
 	}

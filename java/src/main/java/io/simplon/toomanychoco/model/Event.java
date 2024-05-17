@@ -21,6 +21,12 @@ public class Event {
         this.dateEvent = dateEvent;
         this.auteur = auteur;
     }
+
+    public Event() {
+        
+    }
+
+
     
     // Getters et Setters
     public Date getDateEvent() {

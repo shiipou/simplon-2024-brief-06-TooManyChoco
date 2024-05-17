@@ -19,9 +19,13 @@ public class ViennoiserieRepository {
         return instance;
     }
 
+    // ---------------------------------------------------------------------------------------------------------
+
     private static final String SQL_FIND_BY_NAME = "SELECT * FROM viennoiserie WHERE nom = ?";
 
     private static final String SQL_FIND_ALL = "SELECT * FROM viennoiserie";
+
+    // ---------------------------------------------------------------------------------------------------------
 
     private Connection connection = null;
 
@@ -32,6 +36,8 @@ public class ViennoiserieRepository {
             e.printStackTrace();
         }
     }
+
+    // ---------------------------------------------------------------------------------------------------------
 
     public Optional<Viennoiserie> findByName(String search) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_NAME);) {
@@ -49,6 +55,8 @@ public class ViennoiserieRepository {
             return Optional.empty();
         }
     }
+
+    // ---------------------------------------------------------------------------------------------------------
 
     public List<Viennoiserie> findAll() {
         List<Viennoiserie> viennoiseries = new ArrayList<>();
@@ -68,5 +76,7 @@ public class ViennoiserieRepository {
 
         return viennoiseries;
     }
+
+    // ---------------------------------------------------------------------------------------------------------
 
 }

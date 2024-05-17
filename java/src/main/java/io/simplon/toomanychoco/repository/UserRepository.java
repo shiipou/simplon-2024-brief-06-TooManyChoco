@@ -17,7 +17,11 @@ public class UserRepository {
 		return instance;
 	}
 
+    // ---------------------------------------------------------------------------------------------------------
+
 	private static final String SQL_FIND_BY_USERNAME = "SELECT * FROM users WHERE username = ?";
+
+    // ---------------------------------------------------------------------------------------------------------
 
 	private Connection connection = null;
 
@@ -28,6 +32,8 @@ public class UserRepository {
 			e.printStackTrace();
 		}
 	}
+
+    // ---------------------------------------------------------------------------------------------------------
 
 	public Optional<User> findByUsername(String search) {
 		try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_USERNAME);) {
@@ -46,4 +52,8 @@ public class UserRepository {
 			return Optional.empty();
 		}
 	}
+
+    // ---------------------------------------------------------------------------------------------------------
+
+
 }

@@ -1,5 +1,12 @@
 package io.simplon.toomanychoco;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.concurrent.Executors;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
@@ -13,13 +20,6 @@ import io.simplon.toomanychoco.model.Viennoiserie;
 import io.simplon.toomanychoco.repository.EventRepository;
 import io.simplon.toomanychoco.repository.UserRepository;
 import io.simplon.toomanychoco.repository.ViennoiserieRepository;
-
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.concurrent.Executors;
 
 public class App {
 	private static final App instance = new App();
@@ -84,6 +84,7 @@ public class App {
 		}));
 
 		// --------------------------------------------------------------------------------
+
 		// Create a new handler with Database access ('/viennoiseries')
 		server.createContext("/viennoiseries", (request -> {
 
@@ -98,37 +99,43 @@ public class App {
 
 		}));
 
-		// --------------------------------------------------------------------------------
 
 		// --------------------------------------------------------------------------------
 		// Create a new handler with Database access ('/events')
 		server.createContext("/events", (HttpExchange request) -> {
 			ObjectMapper objectMapper = new ObjectMapper();
 			String method = request.getRequestMethod();
-			if (method.equalsIgnoreCase("get")) {
-
-				
-			List<Event> evenements = eventRepository.findAll();
-
-			
-			String response = objectMapper.writeValueAsString(evenements);
-
-			request.sendResponseHeaders(200, response.getBytes().length);
-			request.getResponseBody().write(response.getBytes());
-			request.getResponseBody().close();
-
-			} else if (method.equalsIgnoreCase("post")) {
-				String body = request.getRequestBody().readAllBytes().toString();
-
-				Event event = objectMapper.readValue(body, Event.class);
-				eventRepository.
-				request.sendResponseHeaders(200, 0);
+		
+			if (method.equalsIgnoreCase("GET")) {
+				List<Event> evenements = eventRepository.findAll();
+				String response = objectMapper.writeValueAsString(evenements);
+				request.sendResponseHeaders(200, response.getBytes().length);
+				request.getResponseBody().write(response.getBytes());
 				request.getResponseBody().close();
+		
+			} else if (method.equalsIgnoreCase("POST")) {
+				try {
+					String body = new String(request.getRequestBody().readAllBytes());
+					Event event = objectMapper.readValue(body, Event.class);
+		
+					// Save the event to the database
+					eventRepository.save(event);
+		
+					request.sendResponseHeaders(201, 0);
+					request.getResponseBody().close();
+		
+				} catch (Exception e) {
+					e.printStackTrace();
+					String response = "Failed to create event";
+					request.sendResponseHeaders(500, response.getBytes().length);
+					request.getResponseBody().write(response.getBytes());
+					request.getResponseBody().close();
+				}
+			} else {
+				request.sendResponseHeaders(405, -1); // Method Not Allowed
 			}
-
-
 		});
-
+		
 		// --------------------------------------------------------------------------------
 
 		// Start the server in a new thread
