@@ -6,50 +6,49 @@ import java.util.List;
 public class Event {
 
     // Attributs
-    private Date dateEvent;
-    private User auteur;
-    private List<Viennoiserie> viennoiseries;
+    private Date event_date;
+    private User creator;
+    private List<Pastry> pastries;
 
     // Constructeurs
-    public Event(Date dateEvent, User auteur, List<Viennoiserie> viennoiseries) {
-        this.dateEvent = dateEvent;
-        this.auteur = auteur;
-        this.viennoiseries = viennoiseries;
-    }
-
-    public Event(Date dateEvent, User auteur) {
-        this.dateEvent = dateEvent;
-        this.auteur = auteur;
-    }
-
+    
     public Event() {
         
     }
 
-
-    
-    // Getters et Setters
-    public Date getDateEvent() {
-        return dateEvent;
+    public Event(Date event_date, User creator, List<Pastry> pastries) {
+        this.event_date = event_date;
+        this.creator = creator;
+        this.pastries = pastries;
     }
 
-    public User getAuteur() {
-        return auteur;
+    public Event(Date event_date, User creator) {
+        this.event_date = event_date;
+        this.creator = creator;
     }
 
-    public List<Viennoiserie> getViennoiseries(){
-        return viennoiseries;
-    }
-    
-    public void setViennoiseries(List<Viennoiserie> viennoiseries) {
-        this.viennoiseries = viennoiseries;
+    public Date getEvent_date() {
+        return event_date;
     }
 
-    public void setDateEvent(Date dateEvent) {
-        this.dateEvent = dateEvent;
+    public void setEvent_date(Date event_date) {
+        this.event_date = event_date;
     }
 
-    public void setAuteur(User auteur) {
-        this.auteur = auteur;
+    public User getCreator() {
+        return creator;
     }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
+    }
+
+    public List<Pastry> getPastries() {
+        return pastries;
+    }
+
+    public void setPastries(List<Pastry> pastries) {
+        this.pastries = pastries;
+    }
+
 }

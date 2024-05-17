@@ -24,8 +24,8 @@ public class EventRepository {
 
     // ---------------------------------------------------------------------------------------------------------
 
-    private static final String SQL_FIND_ALL = "SELECT * FROM evenement";
-    private static final String SQL_POST_EVENT = "INSERT INTO evenement (\"dateEvent\", auteur) VALUES (?, ?)";
+    private static final String SQL_FIND_ALL = "SELECT * FROM event";
+    private static final String SQL_POST_EVENT = "INSERT INTO event (\"event_date\", creator) VALUES (?, ?)";
 
     // ---------------------------------------------------------------------------------------------------------
 
@@ -43,15 +43,15 @@ public class EventRepository {
     // ---------------------------------------------------------------------------------------------------------
     
     public List<Event> findAll() {
-        List<Event> evenements = new ArrayList<>();
+        List<Event> events = new ArrayList<>();
 
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL);) {
             ResultSet resultSet = statement.executeQuery();
 
             while(resultSet.next()) {
-                Date dateEvent = resultSet.getDate("dateEvent");
-                User auteur = UserRepository.getInstance().findByUsername(resultSet.getString("auteur")).get();
-                evenements.add(new Event(dateEvent, auteur));
+                Date event_date = resultSet.getDate("event_date");
+                User creator = UserRepository.getInstance().findByUsername(resultSet.getString("creator")).get();
+                events.add(new Event(event_date, creator));
             }                
         
         } catch (SQLException e) {
@@ -59,21 +59,19 @@ public class EventRepository {
 			return new ArrayList<>();
 		}
 
-        return evenements;
-
+        return events;
     }
     
     // ---------------------------------------------------------------------------------------------------------
     
-
     public void save(Event event) throws SQLException {
         
         try (PreparedStatement statement = connection.prepareStatement(SQL_POST_EVENT))
         {
-            java.sql.Date formattedDate = java.sql.Date.valueOf(DateFormat.getDateInstance(DateFormat.SHORT, Locale.ROOT).format(event.getDateEvent()));
+            java.sql.Date formattedDate = java.sql.Date.valueOf(DateFormat.getDateInstance(DateFormat.SHORT, Locale.ROOT).format(event.getEvent_date()));
             statement.setDate(1, formattedDate);
 
-            statement.setString(2, event.getAuteur().getUsername());
+            statement.setString(2, event.getCreator().getUsername());
             statement.executeUpdate();
             
         } catch (SQLException e) {

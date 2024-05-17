@@ -16,10 +16,10 @@ import io.simplon.toomanychoco.db.DbMigrator;
 import io.simplon.toomanychoco.exception.UserNotFoundException;
 import io.simplon.toomanychoco.model.Event;
 import io.simplon.toomanychoco.model.User;
-import io.simplon.toomanychoco.model.Viennoiserie;
+import io.simplon.toomanychoco.model.Pastry;
 import io.simplon.toomanychoco.repository.EventRepository;
 import io.simplon.toomanychoco.repository.UserRepository;
-import io.simplon.toomanychoco.repository.ViennoiserieRepository;
+import io.simplon.toomanychoco.repository.PastryRepository;
 
 public class App {
 	private static final App instance = new App();
@@ -29,7 +29,7 @@ public class App {
 	}
 
 	private final UserRepository userRepository = UserRepository.getInstance();
-	private final ViennoiserieRepository viennoiserieRepository = ViennoiserieRepository.getInstance();
+	private final PastryRepository pastryRepository = PastryRepository.getInstance();
 	private final EventRepository eventRepository = EventRepository.getInstance();
 
 	private App() {
@@ -85,13 +85,13 @@ public class App {
 
 		// --------------------------------------------------------------------------------
 
-		// Create a new handler with Database access ('/viennoiseries')
-		server.createContext("/viennoiseries", (request -> {
+		// Create a new handler with Database access ('/pastries')
+		server.createContext("/pastries", (request -> {
 
-			List<Viennoiserie> viennoiseries = viennoiserieRepository.findAll();
+			List<Pastry> pastries = pastryRepository.findAll();
 
 			ObjectMapper objectMapper = new ObjectMapper();
-			String response = objectMapper.writeValueAsString(viennoiseries);
+			String response = objectMapper.writeValueAsString(pastries);
 
 			request.sendResponseHeaders(200, response.getBytes().length);
 			request.getResponseBody().write(response.getBytes());
@@ -107,8 +107,8 @@ public class App {
 			String method = request.getRequestMethod();
 		
 			if (method.equalsIgnoreCase("GET")) {
-				List<Event> evenements = eventRepository.findAll();
-				String response = objectMapper.writeValueAsString(evenements);
+				List<Event> events = eventRepository.findAll();
+				String response = objectMapper.writeValueAsString(events);
 				request.sendResponseHeaders(200, response.getBytes().length);
 				request.getResponseBody().write(response.getBytes());
 				request.getResponseBody().close();
