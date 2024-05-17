@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./App.css";
+// import "./App.css";
 import CalendarContainer from "./Components/CalendarContainer";
 import PageFormulaires from "./Pages/PageFormulaires";
 import DetailsCard from "./Components/DetailsCard";
