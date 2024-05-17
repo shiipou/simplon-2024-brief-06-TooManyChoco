@@ -1,12 +1,6 @@
 package io.simplon.toomanychoco.db;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -19,14 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.stream.Collectors;
@@ -52,7 +40,7 @@ public class DbMigrator {
 
         boolean hasNewMigrations = false;
         // Execute each migration script if not already executed
-        for (Entry<String, String> script : migrationScripts.entrySet()) {
+        for (Entry<String, String> script : migrationScripts.entrySet().stream().sorted(Comparator.comparing(Entry::getKey)).toList()) {
             String filename = script.getKey();
 
             if (!isScriptExecuted(connection, filename)) {
@@ -126,17 +114,25 @@ public class DbMigrator {
                             String scriptName = path.getFileName().toString();
                             StringBuilder scriptContent = new StringBuilder();
 
-                            try (FileReader scriptContentInputStream = new FileReader(path.toString())) {
-                                BufferedReader reader = new BufferedReader(scriptContentInputStream);
-
-                                String line;
-                                while ((line = reader.readLine()) != null) {
-                                    scriptContent.append(line).append("\n");
-                                }
-                                scripts.put(scriptName, scriptContent.toString());
-                            } catch (IOException e) {
-                                throw e
+                            FileReader scriptContentInputStream = null;
+                            try {
+                                scriptContentInputStream = new FileReader(path.toString());
+                            } catch (FileNotFoundException e) {
+                                throw new RuntimeException(e);
                             }
+                            BufferedReader reader = new BufferedReader(scriptContentInputStream);
+
+                            String line;
+                            while (true) {
+                                try {
+                                    if (!((line = reader.readLine()) != null)) break;
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                scriptContent.append(line).append("\n");
+                            }
+                            scripts.put(scriptName, scriptContent.toString());
+
                         });
             } catch (IOException e) {
                 throw new IOException("Error reading migration scripts from directory", e);
