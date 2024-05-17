@@ -123,10 +123,10 @@ public class DbMigrator {
                         .filter(path -> path.toString().endsWith(".sql"))
                         .sorted()
                         .forEach(path -> {
-                            String scriptName = path.toString();
+                            String scriptName = path.getFileName().toString();
                             StringBuilder scriptContent = new StringBuilder();
 
-                            try (FileReader scriptContentInputStream = new FileReader(scriptName)) {
+                            try (FileReader scriptContentInputStream = new FileReader(path.toString())) {
                                 BufferedReader reader = new BufferedReader(scriptContentInputStream);
 
                                 String line;
@@ -135,7 +135,7 @@ public class DbMigrator {
                                 }
                                 scripts.put(scriptName, scriptContent.toString());
                             } catch (IOException e) {
-                                e.printStackTrace();
+                                throw e
                             }
                         });
             } catch (IOException e) {
