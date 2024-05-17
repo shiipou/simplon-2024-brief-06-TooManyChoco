@@ -1,0 +1,17 @@
+.react-calendar__tile.reserved {
+  position: relative;
+  border: red solid 5px;
+  border-radius: 10px;
+}
+
+.react-calendar__tile.reserved::after {
+    /* 🥐​; '\1F950'   */
+    /* 📊​ */
+    content: '\01F4CA';
+    font-size: 20px;
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
