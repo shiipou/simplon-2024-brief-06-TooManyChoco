@@ -18,7 +18,7 @@ public class UserRepository {
 	}
 
 	private static final String SQL_FIND_BY_USERNAME = "SELECT * FROM users WHERE username = ?";
-	private static final String SQL_CREATE_USER = "INSERT INTO users (username,firstname,email,password) VALUES (?,?,?,?)";
+	private static final String SQL_CREATE_USER = "INSERT INTO users (username,first_name,email,password) VALUES (?,?,?,?)";
 
 
 	private Connection connection = null;

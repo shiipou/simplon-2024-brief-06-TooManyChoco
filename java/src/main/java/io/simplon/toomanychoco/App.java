@@ -1,5 +1,6 @@
 package io.simplon.toomanychoco;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
@@ -10,7 +11,12 @@ import io.simplon.toomanychoco.model.User;
 import io.simplon.toomanychoco.repository.UserRepository;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
+import java.net.URI;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.concurrent.Executors;
@@ -74,6 +80,26 @@ public class App {
 				request.getResponseBody().close();
 			}
 		}));
+
+		//Handler endpoint POST createUser ('/create/user')
+		server.createContext("/create/user", request ->{
+
+			//Lire le corps de la requete sous forme de String
+			String body = new String(request.getRequestBody().readAllBytes());
+			//Parser la String en objet JSON
+			ObjectMapper objectMapper = new ObjectMapper();
+//			User user = new User();
+			try {
+				User user = objectMapper.readValue(body, User.class);
+				//Traitement du user
+				userRepository.createUser(user);
+				//Réponse au client
+				request.sendResponseHeaders(201, 0);
+				request.getResponseBody().close();
+			} catch(Exception e){
+				e.printStackTrace();
+			}
+		});
 
 		// Start the server in a new thread
 		server.setExecutor(Executors.newFixedThreadPool(numberOfThreads)); // Use a thread pool
