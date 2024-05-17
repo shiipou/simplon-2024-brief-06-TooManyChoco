@@ -24,7 +24,7 @@ const NewAccount = () => {
            <label htmlFor="password">Mot de passe :</label>
            <input type="password" id="password" name="password" />
          </div>
-         <button type="submit">Création de compte</button>
+         <button type="submit">S'enregistrer</button>
        </form>
      </div>
      </div>
