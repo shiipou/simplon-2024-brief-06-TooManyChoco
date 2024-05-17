@@ -20,6 +20,7 @@ dependencies {
     // This dependency is used by the application.
     implementation libs.guava
     implementation 'org.postgresql:postgresql:42.7.3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.1'
 }
 
 testing {

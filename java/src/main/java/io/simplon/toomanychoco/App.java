@@ -1,12 +1,16 @@
 package io.simplon.toomanychoco;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
 import io.simplon.toomanychoco.db.DbConnector;
 import io.simplon.toomanychoco.db.DbMigrator;
+import io.simplon.toomanychoco.exception.EventNotFoundException;
 import io.simplon.toomanychoco.exception.UserNotFoundException;
+import io.simplon.toomanychoco.model.Event;
 import io.simplon.toomanychoco.model.User;
+import io.simplon.toomanychoco.repository.EventRespository;
 import io.simplon.toomanychoco.repository.UserRepository;
 
 import java.io.IOException;
@@ -23,6 +27,8 @@ public class App {
 	}
 
 	private final UserRepository userRepository = UserRepository.getInstance();
+	private final EventRespository eventRespository = EventRespository.getInstance();
+
 
 	private App() {
 	}
@@ -68,6 +74,34 @@ public class App {
 				request.getResponseBody().write(response.getBytes());
 				request.getResponseBody().close();
 			} catch (UserNotFoundException error) {
+				String response = error.getMessage();
+				request.sendResponseHeaders(404, response.getBytes().length);
+				request.getResponseBody().write(response.getBytes());
+				request.getResponseBody().close();
+			}
+		}));
+
+		server.createContext("/event", (request -> {
+			try {
+				String date = request.getRequestURI().getPath().split("/")[2];
+
+				Event event = eventRespository
+						.findByEventDate(date)
+						.orElseThrow(
+								() -> new EventNotFoundException(
+										String.format("Event '%s' didn't exist in database.", date)));
+				ObjectMapper objectMapper = new ObjectMapper();
+				String response = objectMapper.writeValueAsString(event);
+
+				request.sendResponseHeaders(200, response.getBytes().length);
+				request.getResponseBody().write(response.getBytes());
+				request.getResponseBody().close();
+			} catch (IndexOutOfBoundsException error) {
+				String response = "Username parameter is missing. Example : `/hello/bob` will return `Hello, Bob!`.";
+				request.sendResponseHeaders(400, response.getBytes().length);
+				request.getResponseBody().write(response.getBytes());
+				request.getResponseBody().close();
+			} catch (EventNotFoundException error) {
 				String response = error.getMessage();
 				request.sendResponseHeaders(404, response.getBytes().length);
 				request.getResponseBody().write(response.getBytes());
