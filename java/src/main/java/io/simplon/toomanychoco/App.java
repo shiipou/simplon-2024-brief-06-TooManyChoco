@@ -64,10 +64,11 @@ public class App {
 								() -> new UserNotFoundException(
 										String.format("User '%s' didn't exist in database.", username)));
 
-				String response = String.format("Hello, %s", user.getFirstName());
+				// ObjectMapper objectMapper = new ObjectMapper();
+				// String response =
 
-				request.sendResponseHeaders(200, response.getBytes().length);
-				request.getResponseBody().write(response.getBytes());
+				// request.sendResponseHeaders(200, response.getBytes().length);
+				// request.getResponseBody().write(response.getBytes());
 				request.getResponseBody().close();
 			} catch (IndexOutOfBoundsException error) {
 				String response = "Username parameter is missing. Example : `/hello/bob` will return `Hello, Bob!`.";
