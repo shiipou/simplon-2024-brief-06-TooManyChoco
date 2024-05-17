@@ -1,27 +1,30 @@
 package io.simplon.toomanychoco.model;
 
+import java.util.Date;
 import java.util.List;
 
 public class Event {
 
-    private String event_date;
+    private Date event_date;
     private int event_id ;
-    private String creator;
+    private User creator;
 
     private List<String> pastry_list;
 
-    public Event(String event_date, int event_id, String creator, List<String> pastry_list) {
+    public Event(Date event_date, int event_id, User creator, List<String> pastry_list) {
         this.event_date = event_date;
         this.event_id = event_id;
         this.creator = creator;
         this.pastry_list = pastry_list;
     }
 
-    public String getEvent_date() {
+
+
+    public Date getEvent_date() {
         return this.event_date;
     }
 
-    public void setEvent_date(String event_date) {
+    public void setEvent_date(Date event_date) {
         this.event_date = event_date;
     }
 
@@ -33,11 +36,11 @@ public class Event {
         this.event_id = event_id;
     }
 
-    public String getCreator() {
+    public User getCreator() {
         return creator;
     }
 
-    public void setCreator(String creator) {
+    public void setCreator(User creator) {
         this.creator = creator;
     }
 

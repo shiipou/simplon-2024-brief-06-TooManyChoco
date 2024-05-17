@@ -2,6 +2,7 @@ package io.simplon.toomanychoco.repository;
 
 import io.simplon.toomanychoco.db.DbConnector;
 import io.simplon.toomanychoco.model.Event;
+import io.simplon.toomanychoco.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +18,7 @@ public class EventRespository {
     }
 
     // requete qui récupère l'event en base de données
-    private static final String SQL_FIND_EVENT = "SELECT e.event_date, e.event_id , u.first_name , p.pastry_name FROM event  e JOIN users u ON e.creator = username JOIN event_pastry ep ON e.event_id = ep.event_id JOIN pastry p ON ep.pastry_id = p.pastry_id WHERE e.event_date = ?";
+    private static final String SQL_FIND_EVENT = "SELECT e.event_date, e.event_id , u.username , p.pastry_name FROM event  e JOIN users u ON e.creator = username JOIN event_pastry ep ON e.event_id = ep.event_id JOIN pastry p ON ep.pastry_id = p.pastry_id WHERE e.event_date = ?";
 
     private Connection connection = null;
 
@@ -36,9 +37,9 @@ public class EventRespository {
             ResultSet resultSet = statement.executeQuery();
             // si résultat création d'un nouvel objet de class event
             if (resultSet.next()) {
-                String event_date = resultSet.getString("event_date");
+                Date event_date = resultSet.getDate("event_date");
                 int event_id = resultSet.getInt("event_id");
-                String creator = resultSet.getString("first_name");
+                User creator = UserRepository.getInstance().findByUsername(resultSet.getString("username")).orElse(null);
                 List<String> pastry_list = new ArrayList<>();
 
                 do {
