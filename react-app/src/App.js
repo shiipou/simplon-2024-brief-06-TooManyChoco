@@ -5,10 +5,21 @@ import CalendarContainer from "./Components/CalendarContainer";
 import PageFormulaires from "./Pages/PageFormulaires";
 import DetailsCard from "./Components/DetailsCard";
 import LoginForm from "./Components/LoginForm";
+import { UserContext } from "./Providers/UserContext";
+import { useState } from "react";
 
 function App() {
+
+  const [userToken, setUserToken] = useState();
+
   return (
     <div className="app">
+      <UserContext.Provider
+        value={{
+          userToken: userToken,
+          setUserToken: setUserToken,
+        }}
+      >
       <BrowserRouter>
         <Header />
         <Routes>
@@ -19,6 +30,7 @@ function App() {
         </Routes>
         <Footer />
       </BrowserRouter>
+      </UserContext.Provider>
     </div>
   );
 }

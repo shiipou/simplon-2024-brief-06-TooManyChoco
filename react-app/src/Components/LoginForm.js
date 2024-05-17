@@ -1,16 +1,33 @@
-import { useCallback } from "react";
+import { useCallback, useContext } from "react";
 import "../styles/login.css";
+import { UserContext } from "../Providers/UserContext";
+import { useNavigate } from "react-router-dom";
+import { userLogin} from "../Services/UserLogin";
 
 const LoginForm = () => {
+  const {setUserToken} = useContext(UserContext);
+  const navigate = useNavigate();
+
+
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
-  });
+
+    const { email, password } = Object.fromEntries(new FormData(event.target))
+    
+    if(email && password){
+      const user = await userLogin(email, password).catch((error)=>(alert(error.message)))
+      if(user){
+          setUserToken(user.token)
+          navigate('/')
+      }
+    }
+  }, [navigate, setUserToken]);
 
   return (
     <div className="main-container">
       <div className="form-container">
           <h3>Connexion</h3>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div>
               <label>Adresse</label>
               <input
