@@ -6,6 +6,7 @@ import java.util.List;
 public class Event {
 
     // Attributs
+    private Integer event_id;
     private Date event_date;
     private User creator;
     private List<Pastry> pastries;
@@ -16,13 +17,15 @@ public class Event {
         
     }
 
-    public Event(Date event_date, User creator, List<Pastry> pastries) {
+    public Event(Integer event_id, Date event_date, User creator, List<Pastry> pastries) {
+        this.event_id = event_id;
         this.event_date = event_date;
         this.creator = creator;
         this.pastries = pastries;
     }
 
-    public Event(Date event_date, User creator) {
+    public Event(Integer event_id, Date event_date, User creator) {
+        this.event_id = event_id;
         this.event_date = event_date;
         this.creator = creator;
     }
@@ -49,6 +52,14 @@ public class Event {
 
     public void setPastries(List<Pastry> pastries) {
         this.pastries = pastries;
+    }
+
+    public Integer getEvent_id() {
+        return event_id;
+    }
+
+    public void setEvent_id(Integer event_id) {
+        this.event_id = event_id;
     }
 
 }

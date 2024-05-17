@@ -13,7 +13,8 @@ CREATE TABLE IF NOT EXISTS event (
 
 CREATE TABLE IF NOT EXISTS event_pastry (
     "event_id" INT REFERENCES "event"("event_id") ON DELETE CASCADE,
-    "pastry_id" INT REFERENCES "pastry"("pastry_id") ON DELETE CASCADE
+    "pastry_id" INT REFERENCES "pastry"("pastry_id") ON DELETE CASCADE,
+    PRIMARY KEY ("event_id", "pastry_id")
 );
 
 
@@ -30,5 +31,4 @@ INSERT INTO event ("event_date", "creator") VALUES
 ('2024-05-16', 'shiipou');
 
 INSERT INTO event_pastry ( "event_id", "pastry_id") VALUES
-(1, 1),
-(1, 4);
+(1, 1);

@@ -15,11 +15,11 @@ import io.simplon.toomanychoco.db.DbConnector;
 import io.simplon.toomanychoco.db.DbMigrator;
 import io.simplon.toomanychoco.exception.UserNotFoundException;
 import io.simplon.toomanychoco.model.Event;
-import io.simplon.toomanychoco.model.User;
 import io.simplon.toomanychoco.model.Pastry;
+import io.simplon.toomanychoco.model.User;
 import io.simplon.toomanychoco.repository.EventRepository;
-import io.simplon.toomanychoco.repository.UserRepository;
 import io.simplon.toomanychoco.repository.PastryRepository;
+import io.simplon.toomanychoco.repository.UserRepository;
 
 public class App {
 	private static final App instance = new App();
@@ -105,21 +105,22 @@ public class App {
 		server.createContext("/events", (HttpExchange request) -> {
 			ObjectMapper objectMapper = new ObjectMapper();
 			String method = request.getRequestMethod();
-		
-			if (method.equalsIgnoreCase("GET")) {
+			
+			/* if (method.equalsIgnoreCase("GET")) {
 				List<Event> events = eventRepository.findAll();
 				String response = objectMapper.writeValueAsString(events);
 				request.sendResponseHeaders(200, response.getBytes().length);
 				request.getResponseBody().write(response.getBytes());
-				request.getResponseBody().close();
+				request.getResponseBody().close(); */
 		
-			} else if (method.equalsIgnoreCase("POST")) {
+			/* } else*/ if (method.equalsIgnoreCase("POST")) { 
 				try {
 					String body = new String(request.getRequestBody().readAllBytes());
 					Event event = objectMapper.readValue(body, Event.class);
+					
 		
 					// Save the event to the database
-					eventRepository.save(event);
+					eventRepository.save(event, event.getPastries());
 		
 					request.sendResponseHeaders(201, 0);
 					request.getResponseBody().close();
@@ -134,7 +135,8 @@ public class App {
 			} else {
 				request.sendResponseHeaders(405, -1); // Method Not Allowed
 			}
-		});
+		
+		 });
 		
 		// --------------------------------------------------------------------------------
 
