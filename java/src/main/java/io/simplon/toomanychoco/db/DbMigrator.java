@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -117,7 +118,7 @@ public class DbMigrator {
                 });
         } else {
             try {
-                Files.walk(Paths.get(migrationScriptsDir.getPath()))
+                Files.walk(Paths.get("src/main/resources/"+ MIGRATION_SCRIPTS_DIR))
                         .filter(Files::isRegularFile)
                         .filter(path -> path.toString().endsWith(".sql"))
                         .sorted()
@@ -125,7 +126,7 @@ public class DbMigrator {
                             String scriptName = path.toString();
                             StringBuilder scriptContent = new StringBuilder();
 
-                            try (FileReader scriptContentInputStream = new FileReader(scriptName)){
+                            try (FileReader scriptContentInputStream = new FileReader(scriptName)) {
                                 BufferedReader reader = new BufferedReader(scriptContentInputStream);
 
                                 String line;
