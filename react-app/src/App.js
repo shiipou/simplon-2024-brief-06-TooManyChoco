@@ -9,7 +9,7 @@ import LoginForm from "./Components/LoginForm";
 
 function App() {
   return (
-    <div className="App">
+    <div className="app">
       <BrowserRouter>
         <Header />
         <Routes>
