@@ -19,6 +19,8 @@ public class UserRepository {
 
 	private static final String SQL_FIND_BY_USERNAME = "SELECT * FROM users WHERE username = ?";
 
+	private static final String SQL_FIND_IS_USER_EXIST = "SELECT * FROM users WHERE email = ? AND password = ?";
+
 	private Connection connection = null;
 
 	private UserRepository() {
@@ -38,7 +40,31 @@ public class UserRepository {
 			if (resultSet.next()) {
 				String username = resultSet.getString("username");
 				String firstName = resultSet.getString("first_name");
-				return Optional.of(new User(username, firstName));
+				String email = resultSet.getString("email");
+				String password = resultSet.getString("password");
+				return Optional.of(new User(username, firstName, email, password));
+			} else {
+				return Optional.empty();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return Optional.empty();
+		}
+	}
+
+	public Optional<User> findIsUserExist(User user) {
+		try (
+				PreparedStatement statement = connection.prepareStatement(SQL_FIND_IS_USER_EXIST);) {
+			statement.setString(1, user.getEmail());
+			statement.setString(2, user.getPassword());
+			ResultSet resultSet = statement.executeQuery();
+
+			if (resultSet.next()) {
+				String username = resultSet.getString("username");
+				String firstName = resultSet.getString("first_name");
+				String email = resultSet.getString("email");
+				String password = resultSet.getString("password");
+				return Optional.of(new User(username, firstName, email, password));
 			} else {
 				return Optional.empty();
 			}

@@ -14,6 +14,7 @@ import java.net.InetSocketAddress;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.concurrent.Executors;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class App {
 	private static final App instance = new App();
@@ -58,6 +59,35 @@ public class App {
 										String.format("User '%s' didn't exist in database.", username)));
 
 				String response = String.format("Hello, %s", user.getFirstName());
+
+				request.sendResponseHeaders(200, response.getBytes().length);
+				request.getResponseBody().write(response.getBytes());
+				request.getResponseBody().close();
+			} catch (IndexOutOfBoundsException error) {
+				String response = "Username parameter is missing. Example : `/hello/bob` will return `Hello, Bob!`.";
+				request.sendResponseHeaders(400, response.getBytes().length);
+				request.getResponseBody().write(response.getBytes());
+				request.getResponseBody().close();
+			} catch (UserNotFoundException error) {
+				String response = error.getMessage();
+				request.sendResponseHeaders(404, response.getBytes().length);
+				request.getResponseBody().write(response.getBytes());
+				request.getResponseBody().close();
+			}
+		}));
+
+		server.createContext("/login", (request -> {
+			try {
+				Object userInfo = request.getRequestBody();
+
+				User user = userRepository
+						.findIsUserExist((User) userInfo)
+						.orElseThrow(
+								() -> new UserNotFoundException(
+										String.format("User '%s' didn't exist in database.", ((User) userInfo).getEmail())));
+
+				ObjectMapper objectMapper = new ObjectMapper();
+				String response = objectMapper.writeValueAsString(user);
 
 				request.sendResponseHeaders(200, response.getBytes().length);
 				request.getResponseBody().write(response.getBytes());
