@@ -42,7 +42,7 @@ java {
 
 sourceSets {
     main.java.srcDir "src/main/java"
-    main.resources.srcDir "src/main/resources"
+    // main.resources.srcDir "src/main/resources"
 }
 
 application {
@@ -51,10 +51,13 @@ application {
 }
 
 jar {
-  manifest {
-    attributes(
-      'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' '),
-      'Main-Class': application.mainClass
-    )
-  }
+    manifest {
+        attributes "Main-Class": application.mainClass
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
