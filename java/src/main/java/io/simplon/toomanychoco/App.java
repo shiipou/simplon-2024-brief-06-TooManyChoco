@@ -65,7 +65,7 @@ public class App {
 								() -> new UserNotFoundException(
 										String.format("User '%s' didn't exist in database.", username)));
 
-				String response = String.format("Hello, %s", user.getFirstName());
+				String response = String.format("Hello, %s", user.getFirstname());
 
 				request.sendResponseHeaders(200, response.getBytes().length);
 				request.getResponseBody().write(response.getBytes());

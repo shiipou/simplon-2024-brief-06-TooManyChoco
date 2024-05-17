@@ -39,10 +39,10 @@ public class UserRepository {
 
 			if (resultSet.next()) {
 				String username = resultSet.getString("username");
-				String firstName = resultSet.getString("first_name");
+				String firstname = resultSet.getString("first_name");
 				String email = resultSet.getString("email");
 				String password = resultSet.getString("password");
-				return Optional.of(new User(username, firstName, email, password));
+				return Optional.of(new User(username, firstname, email, password));
 			} else {
 				return Optional.empty();
 			}
@@ -61,10 +61,10 @@ public class UserRepository {
 
 			if (resultSet.next()) {
 				String username = resultSet.getString("username");
-				String firstName = resultSet.getString("first_name");
+				String firstname = resultSet.getString("first_name");
 				String email = resultSet.getString("email");
 				String password = resultSet.getString("password");
-				return Optional.of(new User(username, firstName, email, password));
+				return Optional.of(new User(username, firstname, email, password));
 			} else {
 				return Optional.empty();
 			}

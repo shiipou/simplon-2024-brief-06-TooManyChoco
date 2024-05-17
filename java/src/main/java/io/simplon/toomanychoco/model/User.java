@@ -3,7 +3,7 @@ package io.simplon.toomanychoco.model;
 public class User {
 
 	private String username;
-	private String firstName;
+	private String firstname;
 
 	private String email;
 
@@ -13,9 +13,9 @@ public class User {
 	public User(){
 
 	}
-	public User(String username, String firstName, String email, String password) {
+	public User(String username, String firstname, String email, String password) {
 		this.username = username;
-		this.firstName = firstName;
+		this.firstname = firstname;
 		this.email = email;
 		this.password = password;
 	}
@@ -33,12 +33,12 @@ public class User {
 		this.username = username;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
 	public String getEmail() {
