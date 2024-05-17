@@ -96,6 +96,11 @@ element.style {
   font-weight: 800;
 }
 
+.myCustomCalendar {
+  display: flex;
+  justify-content: center;
+}
+
 /* media-queries pour l'affichage du tableau de film en bas de page */
 
 @media screen and (min-width: 600px) {
