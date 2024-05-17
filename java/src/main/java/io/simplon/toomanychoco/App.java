@@ -1,7 +1,6 @@
 package io.simplon.toomanychoco;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
 import io.simplon.toomanychoco.db.DbConnector;
@@ -14,14 +13,8 @@ import io.simplon.toomanychoco.repository.EventRespository;
 import io.simplon.toomanychoco.repository.UserRepository;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
-import java.net.URI;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.concurrent.Executors;
 
@@ -69,7 +62,7 @@ public class App {
 								() -> new UserNotFoundException(
 										String.format("User '%s' didn't exist in database.", username)));
 
-				String response = String.format("Hello, %s", user.getFirstName());
+				String response = String.format("Hello, %s", user.getFirstname());
 
 				request.sendResponseHeaders(200, response.getBytes().length);
 				request.getResponseBody().write(response.getBytes());

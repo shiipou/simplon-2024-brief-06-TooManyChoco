@@ -54,8 +54,8 @@ public class UserRepository {
 		try(
 			PreparedStatement statement = connection.prepareStatement(SQL_CREATE_USER);){
 			statement.setString(1, user.getUsername());
-			statement.setString(2, user.getFirstName());
-			statement.setString(3, user.geteMail());
+			statement.setString(2, user.getFirstname());
+			statement.setString(3, user.getEmail());
 			statement.setString(4, user.getPassword());
 			statement.executeUpdate();
 		} catch (SQLException e) {

@@ -4,23 +4,23 @@ public class User {
 
 
 	private String username;
-	private String firstName;
-	private String eMail;
+	private String firstname;
+	private String email;
 	private String password;
 
 	public User() {
 
 	}
-	public User(String username, String firstName, String eMail, String password) {
+	public User(String username, String firstname, String email, String password) {
 		this.username = username;
-		this.firstName = firstName;
-		this.eMail = eMail;
+		this.firstname = firstname;
+		this.email = email;
 		this.password = password;
 	}
 
-	public User(String username, String firstName) {
+	public User(String username, String firstname) {
 		this.username = username;
-		this.firstName = firstName;
+		this.firstname = firstname;
 	}
 
 	public String getUsername() {
@@ -31,20 +31,20 @@ public class User {
 		this.username = username;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
-	public String geteMail() {
-		return eMail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void seteMail(String eMail) {
-		this.eMail = eMail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -59,8 +59,8 @@ public class User {
 	public String toString() {
 		return "User{" +
 				"username='" + username + '\'' +
-				", firstName='" + firstName + '\'' +
-				", eMail='" + eMail + '\'' +
+				", firstName='" + firstname + '\'' +
+				", eMail='" + email + '\'' +
 				'}';
 	}
 }
