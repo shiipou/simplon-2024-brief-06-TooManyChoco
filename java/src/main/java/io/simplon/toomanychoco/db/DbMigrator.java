@@ -117,7 +117,7 @@ public class DbMigrator {
                 });
         } else {
             try {
-                Files.walk(Paths.get(migrationScriptsDir.getFile()))
+                Files.walk(Paths.get(migrationScriptsDir.getPath()))
                         .filter(Files::isRegularFile)
                         .filter(path -> path.toString().endsWith(".sql"))
                         .sorted()
@@ -155,7 +155,6 @@ public class DbMigrator {
     }
 
     private void executeMigrationScript(Connection connection, String scriptPath, String scriptContent) throws SQLException, IOException {
-        System.out.println(scriptContent);
         try (Statement statement = connection.createStatement()) {
             statement.execute(scriptContent);
         } catch (SQLException e) {
