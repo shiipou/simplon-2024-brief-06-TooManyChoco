@@ -16,6 +16,7 @@ import io.simplon.toomanychoco.repository.UserRepository;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.concurrent.Executors;
 
@@ -83,6 +84,7 @@ public class App {
 
 		server.createContext("/event", (request -> {
 			try {
+				// on recherche le contenu dans l'url après /event/ XXXXXX
 				String date = request.getRequestURI().getPath().split("/")[2];
 
 				Event event = eventRespository
@@ -97,7 +99,7 @@ public class App {
 				request.getResponseBody().write(response.getBytes());
 				request.getResponseBody().close();
 			} catch (IndexOutOfBoundsException error) {
-				String response = "Username parameter is missing. Example : `/hello/bob` will return `Hello, Bob!`.";
+				String response = "Event parameter is missing. Example : `/event/2024-05-16` will return  event_date | event_id | first_name | pastry_name.";
 				request.sendResponseHeaders(400, response.getBytes().length);
 				request.getResponseBody().write(response.getBytes());
 				request.getResponseBody().close();
