@@ -68,10 +68,12 @@ export async function userLogin(email, password) {
 //         .then(response => response.json())
 // }
 
-const users = [{id:1, pseudo:'test', password: 'Test', email: 'test@email.com'},{id:2, pseudo:'user', password: 'Test', email: 'test2@example.com'}]
+const users = [{ id: 1, pseudo: 'test', password: 'Test', email: 'test@email.com' }, { id: 2, pseudo: 'user', password: 'Test', email: 'test2@example.com' }]
 
-export function userLogin(email, password) {
-    return users.find((user)=>user.email.toLocaleLowerCase() === email.toLocaleLowerCase() && user.password === password)
+export async function userLogin(email, password) {
+    return users.find((user) => user.email.toLocaleLowerCase() === email.toLocaleLowerCase() && user.password === password)
+        ? users.find((user) => user.email.toLocaleLowerCase() === email.toLocaleLowerCase() && user.password === password)
+        : alert("error.message");
 }
 
 // avec l'API
@@ -95,6 +97,7 @@ export function userLogin(email, password) {
 //         })
 //     })
 //         .then(response => response.json())
+//          .catch(error => alert(error.message))
 // }
 
 // export async function getUserByToken(token) {
