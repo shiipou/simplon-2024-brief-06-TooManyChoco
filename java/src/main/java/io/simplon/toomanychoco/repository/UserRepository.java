@@ -17,9 +17,15 @@ public class UserRepository {
 		return instance;
 	}
 
+    // ---------------------------------------------------------------------------------------------------------
+
 	private static final String SQL_FIND_BY_USERNAME = "SELECT * FROM users WHERE username = ?";
 
+
+    // ---------------------------------------------------------------------------------------------------------
+
 	private static final String SQL_FIND_IS_USER_EXIST = "SELECT * FROM users WHERE email = ? AND password = ?";
+
 
 	private Connection connection = null;
 
@@ -31,9 +37,10 @@ public class UserRepository {
 		}
 	}
 
+    // ---------------------------------------------------------------------------------------------------------
+
 	public Optional<User> findByUsername(String search) {
-		try (
-				PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_USERNAME);) {
+		try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_USERNAME);) {
 			statement.setString(1, search);
 			ResultSet resultSet = statement.executeQuery();
 
@@ -73,4 +80,8 @@ public class UserRepository {
 			return Optional.empty();
 		}
 	}
+
+    // ---------------------------------------------------------------------------------------------------------
+
+
 }
