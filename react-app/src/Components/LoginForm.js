@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import "../styles/login.css";
+import "./loginForm.css";
 
 const LoginForm = () => {
   const handleSubmit = useCallback(async (event) => {
