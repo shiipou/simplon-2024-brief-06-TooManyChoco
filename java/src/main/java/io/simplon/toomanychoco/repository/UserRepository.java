@@ -20,6 +20,8 @@ public class UserRepository {
     // ---------------------------------------------------------------------------------------------------------
 
 	private static final String SQL_FIND_BY_USERNAME = "SELECT * FROM users WHERE username = ?";
+	private static final String SQL_CREATE_USER = "INSERT INTO users (username,first_name,email,password) VALUES (?,?,?,?)";
+
 
 
     // ---------------------------------------------------------------------------------------------------------
@@ -81,7 +83,16 @@ public class UserRepository {
 		}
 	}
 
-    // ---------------------------------------------------------------------------------------------------------
-
-
+	public void createUser(User user){
+		try(
+			PreparedStatement statement = connection.prepareStatement(SQL_CREATE_USER);){
+			statement.setString(1, user.getUsername());
+			statement.setString(2, user.getFirstname());
+			statement.setString(3, user.getEmail());
+			statement.setString(4, user.getPassword());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
