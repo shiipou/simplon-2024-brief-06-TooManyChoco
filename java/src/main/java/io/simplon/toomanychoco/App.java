@@ -1,11 +1,8 @@
 package io.simplon.toomanychoco;
 
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.concurrent.Executors;
+
+
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
@@ -13,13 +10,26 @@ import com.sun.net.httpserver.HttpServer;
 
 import io.simplon.toomanychoco.db.DbConnector;
 import io.simplon.toomanychoco.db.DbMigrator;
+import io.simplon.toomanychoco.exception.EventNotFoundException;
 import io.simplon.toomanychoco.exception.UserNotFoundException;
 import io.simplon.toomanychoco.model.Event;
+
 import io.simplon.toomanychoco.model.Pastry;
 import io.simplon.toomanychoco.model.User;
-import io.simplon.toomanychoco.repository.EventRepository;
+
 import io.simplon.toomanychoco.repository.PastryRepository;
+import io.simplon.toomanychoco.model.User;
+import io.simplon.toomanychoco.repository.EventRespository;
 import io.simplon.toomanychoco.repository.UserRepository;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.concurrent.Executors;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 public class App {
 	private static final App instance = new App();
@@ -29,6 +39,7 @@ public class App {
 	}
 
 	private final UserRepository userRepository = UserRepository.getInstance();
+
 	private final PastryRepository pastryRepository = PastryRepository.getInstance();
 	private final EventRepository eventRepository = EventRepository.getInstance();
 
@@ -65,10 +76,10 @@ public class App {
 								() -> new UserNotFoundException(
 										String.format("User '%s' didn't exist in database.", username)));
 
-				String response = String.format("Hello, %s", user.getFirstName());
+				String response = String.format("Hello, %s", user.getFirstname());
 
-				request.sendResponseHeaders(200, response.getBytes().length);
-				request.getResponseBody().write(response.getBytes());
+				// request.sendResponseHeaders(200, response.getBytes().length);
+				// request.getResponseBody().write(response.getBytes());
 				request.getResponseBody().close();
 			} catch (IndexOutOfBoundsException error) {
 				String response = "Username parameter is missing. Example : `/hello/bob` will return `Hello, Bob!`.";
@@ -82,6 +93,7 @@ public class App {
 				request.getResponseBody().close();
 			}
 		}));
+
 
 		// --------------------------------------------------------------------------------
 
@@ -139,6 +151,73 @@ public class App {
 		 });
 		
 		// --------------------------------------------------------------------------------
+
+		// Vérifie qu'un user existe en base si oui cette route renvoie les informations d'user
+		server.createContext("/login", (request -> {
+			String method = request.getRequestMethod();
+			if (method.equalsIgnoreCase("POST")) {
+				try {
+					ObjectMapper objectMapper = new ObjectMapper();
+
+					String userInfoJson = new String(request.getRequestBody().readAllBytes());
+					System.out.println(userInfoJson);
+
+					User userInfo = objectMapper.readValue(userInfoJson, User.class);
+					System.out.println(userInfo);
+
+					User user = userRepository
+							.findIsUserExist(userInfo)
+							.orElseThrow(
+									() -> new UserNotFoundException(
+											String.format("User '%s' didn't exist in database.", ((User) userInfo).getEmail())));
+
+					String response = objectMapper.writeValueAsString(user);
+
+					request.sendResponseHeaders(200, response.getBytes().length);
+					request.getResponseBody().write(response.getBytes());
+					request.getResponseBody().close();
+				} catch (com.fasterxml.jackson.core.JsonProcessingException e) {
+					e.printStackTrace();
+				} catch (UserNotFoundException error) {
+					String response = "User not found. ";
+					request.sendResponseHeaders(400, response.getBytes().length);
+					request.getResponseBody().write(response.getBytes());
+					request.getResponseBody().close();
+				}
+			}
+		}));
+
+
+		server.createContext("/event", (request -> {
+			try {
+				// on recherche le contenu dans l'url après /event/ XXXXXX
+				String date = request.getRequestURI().getPath().split("/")[2];
+
+				Event event = eventRespository
+						.findByEventDate(date)
+						.orElseThrow(
+								() -> new EventNotFoundException(
+										String.format("Event '%s' didn't exist in database.", date)));
+				ObjectMapper objectMapper = new ObjectMapper();
+				String response = objectMapper.writeValueAsString(event);
+
+
+				request.sendResponseHeaders(200, response.getBytes().length);
+				request.getResponseBody().write(response.getBytes());
+				request.getResponseBody().close();
+			} catch (IndexOutOfBoundsException error) {
+				String response = "Event parameter is missing. Example : `/event/2024-05-16` will return  event_date | event_id | first_name | pastry_name.";
+				request.sendResponseHeaders(400, response.getBytes().length);
+				request.getResponseBody().write(response.getBytes());
+				request.getResponseBody().close();
+			} catch (EventNotFoundException error) {
+				String response = error.getMessage();
+				request.sendResponseHeaders(404, response.getBytes().length);
+				request.getResponseBody().write(response.getBytes());
+				request.getResponseBody().close();
+			}
+		}));
+
 
 		// Start the server in a new thread
 		server.setExecutor(Executors.newFixedThreadPool(numberOfThreads)); // Use a thread pool

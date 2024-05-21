@@ -20,7 +20,8 @@ dependencies {
     // This dependency is used by the application.
     implementation libs.guava
     implementation 'org.postgresql:postgresql:42.7.3'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.1'
+
 }
 
 testing {
@@ -42,7 +43,7 @@ java {
 
 sourceSets {
     main.java.srcDir "src/main/java"
-    main.resources.srcDir "src/main/resources"
+    // main.resources.srcDir "src/main/resources"
 }
 
 application {
@@ -51,10 +52,13 @@ application {
 }
 
 jar {
-  manifest {
-    attributes(
-      'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' '),
-      'Main-Class': application.mainClass
-    )
-  }
+    manifest {
+        attributes "Main-Class": application.mainClass
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }

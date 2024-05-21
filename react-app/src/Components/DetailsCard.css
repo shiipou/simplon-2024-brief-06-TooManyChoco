@@ -1,0 +1,67 @@
+* {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  width: auto;
+  height: 1024px;
+  align-items: center;
+}
+
+.content {
+  height: 364px;
+  width: 289px;
+  border-radius: 10%;
+  background-color: rgb(198, 34, 34);
+}
+
+.content h1 {
+  color: white;
+  margin-left: 10px;
+  margin-block-end: 2px;
+}
+
+.content p {
+  color: white;
+  margin: 10px;
+  font-size: 15px;
+  margin-top: 1px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  padding-left: 40px;
+  justify-content: flex-start;
+}
+.userContainer,
+.foodContainer {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+}
+.userIcon {
+  color: white;
+  font-size: 1.7rem;
+}
+.foodIcon {
+  color: white;
+  font-size: 1.5rem;
+}
+.userName,
+.foodName {
+  margin-block: 0;
+  margin-left: 20px;
+  color: white;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
