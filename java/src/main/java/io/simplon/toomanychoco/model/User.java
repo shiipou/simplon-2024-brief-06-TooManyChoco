@@ -23,6 +23,9 @@ public class User {
 		this.username = username;
 		this.firstname = firstname;	
 	}
+	public User(String username) {
+		this.username = username;
+	}
 
 	// public User(String email, String password) {
 	// 	this.email = email;
