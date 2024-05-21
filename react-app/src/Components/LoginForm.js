@@ -16,7 +16,6 @@ const LoginForm = () => {
 
     if (email && password) {
       const user = await userLogin(email, password)
-      // const user = await userLogin(email, password);
 
       if (user) {
         setUserToken(user.token)
