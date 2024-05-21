@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import logo from "../assets/img/logotmc.png";
 import { TbLogout } from "react-icons/tb";
 import { Link } from "react-router-dom";
-import "./header.css";
+import "../Styles/header.css";
 
 export default function Header() {
   //utilisation d'un useState pour gérer l'état du menu burger
