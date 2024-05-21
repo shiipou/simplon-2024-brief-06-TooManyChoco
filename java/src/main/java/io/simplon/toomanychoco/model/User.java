@@ -10,9 +10,7 @@ public class User {
 	private String password;
 
 	// constructeur vide par défaut à conserver car sans json parser ne fonctionnera pas
-	public User(){
-
-	}
+	
 	public User(String username, String firstname, String email, String password) {
 		this.username = username;
 		this.firstname = firstname;
