@@ -1,4 +1,0 @@
-CREATE TABLE IF NOT EXISTS users (
-  username VARCHAR(255) PRIMARY KEY,
-  first_name VARCHAR(255) NOT NULL
-);
