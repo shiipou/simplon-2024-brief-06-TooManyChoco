@@ -31,9 +31,6 @@ public class Event {
         this.creator = creator;
     }
 
-    public Date getEvent_date() {
-        return event_date;
-
     private Date event_date;
     private int event_id ;
     private User creator;
@@ -82,13 +79,6 @@ public class Event {
     public void setPastries(List<Pastry> pastries) {
         this.pastries = pastries;
     }
-
-    public Integer getEvent_id() {
-        return event_id;
-    }
-
-    public void setEvent_id(Integer event_id) {
-        this.event_id = event_id;
 
     public List<String> getPastryList() {
         return this.pastry_list;
