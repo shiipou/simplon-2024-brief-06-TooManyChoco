@@ -5,7 +5,6 @@ import java.util.List;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
 import io.simplon.toomanychoco.db.DbConnector;
@@ -26,7 +25,6 @@ import io.simplon.toomanychoco.repository.UserRepository;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.concurrent.Executors;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -95,6 +93,25 @@ public class App {
 			}
 		}));
 
+		//Handler endpoint POST createUser ('/create/user')
+		server.createContext("/create/user", request ->{
+
+			//Lire le corps de la requete sous forme de String
+			String body = new String(request.getRequestBody().readAllBytes());
+			//Parser la String en objet JSON
+			ObjectMapper objectMapper = new ObjectMapper();
+//			User user = new User();
+			try {
+				User user = objectMapper.readValue(body, User.class);
+				//Traitement du user
+				userRepository.createUser(user);
+				//Réponse au client
+				request.sendResponseHeaders(201, 0);
+				request.getResponseBody().close();
+			} catch(Exception e){
+				e.printStackTrace();
+			}
+		});
 
 		// --------------------------------------------------------------------------------
 
@@ -115,7 +132,7 @@ public class App {
 
 		// --------------------------------------------------------------------------------
 		// Create a new handler with Database access ('/events')
-		server.createContext("/events", (HttpExchange request) -> {
+		server.createContext("/events", (request) -> {
 			ObjectMapper objectMapper = new ObjectMapper();
 			String method = request.getRequestMethod();
 			

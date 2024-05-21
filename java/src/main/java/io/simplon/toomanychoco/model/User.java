@@ -4,13 +4,14 @@ public class User {
 
 	private String username;
 	private String firstname;
-
 	private String email;
-
 	private String password;
 
 	// constructeur vide par défaut à conserver car sans json parser ne fonctionnera pas
-	
+	public User(){
+
+	}
+
 	public User(String username, String firstname, String email, String password) {
 		this.username = username;
 		this.firstname = firstname;
@@ -18,17 +19,18 @@ public class User {
 		this.password = password;
 	}
 
-	public User(String email, String password) {
-		this.email = email;
-		this.password = password;
+	public User(String username, String firstname) {
+		this.username = username;
+		this.firstname = firstname;	
 	}
 	public User(String username) {
 		this.username = username;
 	}
 
-	public User() {
-		
-	}
+	// public User(String email, String password) {
+	// 	this.email = email;
+	// 	this.password = password;
+	// }
 
 	public String getUsername() {
 		return username;
@@ -60,5 +62,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"username='" + username + '\'' +
+				", firstName='" + firstname + '\'' +
+				", eMail='" + email + '\'' +
+				'}';
 	}
 }
