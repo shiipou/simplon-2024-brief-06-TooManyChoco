@@ -19,9 +19,15 @@ public class UserRepository {
         return instance;
     }
 
-    private static final String SQL_FIND_BY_USERNAME = "SELECT * FROM users WHERE username = ?";
+    // ---------------------------------------------------------------------------------------------------------
+
+	private static final String SQL_FIND_BY_USERNAME = "SELECT * FROM users WHERE username = ?";
+
+
+    // ---------------------------------------------------------------------------------------------------------
 
 	private static final String SQL_FIND_IS_USER_EXIST = "SELECT * FROM users WHERE email = ? AND password = ?";
+
 
 	private Connection connection = null;
 
@@ -84,4 +90,8 @@ public class UserRepository {
 			return Optional.empty();
 		}
 	}
+
+    // ---------------------------------------------------------------------------------------------------------
+
+
 }

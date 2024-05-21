@@ -1,5 +1,9 @@
 package io.simplon.toomanychoco;
 
+import java.util.List;
+
+
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.*;
 
@@ -8,15 +12,23 @@ import io.simplon.toomanychoco.db.DbMigrator;
 import io.simplon.toomanychoco.exception.EventNotFoundException;
 import io.simplon.toomanychoco.exception.UserNotFoundException;
 import io.simplon.toomanychoco.model.Event;
+
+import io.simplon.toomanychoco.model.Pastry;
 import io.simplon.toomanychoco.model.User;
-import io.simplon.toomanychoco.repository.EventRespository;
+
+import io.simplon.toomanychoco.repository.PastryRepository;
+import io.simplon.toomanychoco.model.User;
 import io.simplon.toomanychoco.repository.UserRepository;
+import io.simplon.toomanychoco.repository.EventRespository;
+import io.simplon.toomanychoco.repository.EventRepository;
+
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.sql.*;
 import java.util.concurrent.Executors;
 // import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 public class App {
 	private static final App instance = new App();
@@ -26,6 +38,9 @@ public class App {
 	}
 
 	private final UserRepository userRepository = UserRepository.getInstance();
+
+	private final PastryRepository pastryRepository = PastryRepository.getInstance();
+	private final EventRepository eventRepository = EventRepository.getInstance();
 	private final EventRespository eventRespository = EventRespository.getInstance();
 
 	private App() {
@@ -78,6 +93,64 @@ public class App {
 				request.getResponseBody().close();
 			}
 		}));
+
+
+		// --------------------------------------------------------------------------------
+
+		// Create a new handler with Database access ('/pastries')
+		server.createContext("/pastries", (request -> {
+
+			List<Pastry> pastries = pastryRepository.findAll();
+
+			ObjectMapper objectMapper = new ObjectMapper();
+			String response = objectMapper.writeValueAsString(pastries);
+
+			request.sendResponseHeaders(200, response.getBytes().length);
+			request.getResponseBody().write(response.getBytes());
+			request.getResponseBody().close();
+
+		}));
+
+
+		// --------------------------------------------------------------------------------
+		// Create a new handler with Database access ('/events')
+		server.createContext("/events", (HttpExchange request) -> {
+			ObjectMapper objectMapper = new ObjectMapper();
+			String method = request.getRequestMethod();
+			
+			/* if (method.equalsIgnoreCase("GET")) {
+				List<Event> events = eventRepository.findAll();
+				String response = objectMapper.writeValueAsString(events);
+				request.sendResponseHeaders(200, response.getBytes().length);
+				request.getResponseBody().write(response.getBytes());
+				request.getResponseBody().close(); */
+		
+			/* } else*/ if (method.equalsIgnoreCase("POST")) { 
+				try {
+					String body = new String(request.getRequestBody().readAllBytes());
+					Event event = objectMapper.readValue(body, Event.class);
+					
+		
+					// Save the event to the database
+					eventRepository.save(event, event.getPastries());
+		
+					request.sendResponseHeaders(201, 0);
+					request.getResponseBody().close();
+		
+				} catch (Exception e) {
+					e.printStackTrace();
+					String response = "Failed to create event";
+					request.sendResponseHeaders(500, response.getBytes().length);
+					request.getResponseBody().write(response.getBytes());
+					request.getResponseBody().close();
+				}
+			} else {
+				request.sendResponseHeaders(405, -1); // Method Not Allowed
+			}
+		
+		 });
+		
+		// --------------------------------------------------------------------------------
 
 		// Vérifie qu'un user existe en base si oui cette route renvoie les informations d'user
 		server.createContext("/login", (request -> {
@@ -144,6 +217,7 @@ public class App {
 				request.getResponseBody().close();
 			}
 		}));
+
 
 		// Start the server in a new thread
 		server.setExecutor(Executors.newFixedThreadPool(numberOfThreads)); // Use a thread pool

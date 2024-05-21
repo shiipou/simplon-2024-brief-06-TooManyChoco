@@ -5,6 +5,35 @@ import java.util.List;
 
 public class Event {
 
+
+    // Attributs
+
+   
+   
+    private List<Pastry> pastries;
+
+    // Constructeurs
+    
+    public Event() {
+        
+    }
+
+    public Event(Integer event_id, Date event_date, User creator, List<Pastry> pastries) {
+        this.event_id = event_id;
+        this.event_date = event_date;
+        this.creator = creator;
+        this.pastries = pastries;
+    }
+
+    public Event(Integer event_id, Date event_date, User creator) {
+        this.event_id = event_id;
+        this.event_date = event_date;
+        this.creator = creator;
+    }
+
+    public Date getEvent_date() {
+        return event_date;
+
     private Date event_date;
     private int event_id ;
     private User creator;
@@ -19,14 +48,15 @@ public class Event {
     }
 
 
-
     public Date getEvent_date() {
         return this.event_date;
+
     }
 
     public void setEvent_date(Date event_date) {
         this.event_date = event_date;
     }
+
 
     public int getEvent_id() {
         return this.event_id;
@@ -44,6 +74,22 @@ public class Event {
         this.creator = creator;
     }
 
+
+    public List<Pastry> getPastries() {
+        return pastries;
+    }
+
+    public void setPastries(List<Pastry> pastries) {
+        this.pastries = pastries;
+    }
+
+    public Integer getEvent_id() {
+        return event_id;
+    }
+
+    public void setEvent_id(Integer event_id) {
+        this.event_id = event_id;
+
     public List<String> getPastryList() {
         return this.pastry_list;
     }
@@ -54,6 +100,7 @@ public class Event {
 
     public void addPastry(String pastry_name) {
         pastry_list.add(pastry_name);
+
     }
 
 }
