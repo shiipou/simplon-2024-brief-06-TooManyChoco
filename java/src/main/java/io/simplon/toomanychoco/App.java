@@ -17,6 +17,7 @@ import java.net.InetSocketAddress;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.concurrent.Executors;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class App {
 	private static final App instance = new App();
@@ -64,8 +65,8 @@ public class App {
 
 				String response = String.format("Hello, %s", user.getFirstname());
 
-				request.sendResponseHeaders(200, response.getBytes().length);
-				request.getResponseBody().write(response.getBytes());
+				// request.sendResponseHeaders(200, response.getBytes().length);
+				// request.getResponseBody().write(response.getBytes());
 				request.getResponseBody().close();
 			} catch (IndexOutOfBoundsException error) {
 				String response = "Username parameter is missing. Example : `/hello/bob` will return `Hello, Bob!`.";
@@ -99,6 +100,42 @@ public class App {
 				e.printStackTrace();
 			}
 		});
+		// Vérifie qu'un user existe en base si oui cette route renvoie les informations d'user
+		server.createContext("/login", (request -> {
+			String method = request.getRequestMethod();
+			if (method.equalsIgnoreCase("POST")) {
+				try {
+					ObjectMapper objectMapper = new ObjectMapper();
+
+					String userInfoJson = new String(request.getRequestBody().readAllBytes());
+					System.out.println(userInfoJson);
+
+					User userInfo = objectMapper.readValue(userInfoJson, User.class);
+					System.out.println(userInfo);
+
+					User user = userRepository
+							.findIsUserExist(userInfo)
+							.orElseThrow(
+									() -> new UserNotFoundException(
+											String.format("User '%s' didn't exist in database.", ((User) userInfo).getEmail())));
+
+					String response = objectMapper.writeValueAsString(user);
+
+					request.sendResponseHeaders(200, response.getBytes().length);
+					request.getResponseBody().write(response.getBytes());
+					request.getResponseBody().close();
+				} catch (com.fasterxml.jackson.core.JsonProcessingException e) {
+					e.printStackTrace();
+				} catch (UserNotFoundException error) {
+					String response = "User not found. ";
+					request.sendResponseHeaders(400, response.getBytes().length);
+					request.getResponseBody().write(response.getBytes());
+					request.getResponseBody().close();
+				}
+			}
+		}));
+
+
 		server.createContext("/event", (request -> {
 			try {
 				// on recherche le contenu dans l'url après /event/ XXXXXX
@@ -111,6 +148,7 @@ public class App {
 										String.format("Event '%s' didn't exist in database.", date)));
 				ObjectMapper objectMapper = new ObjectMapper();
 				String response = objectMapper.writeValueAsString(event);
+
 
 				request.sendResponseHeaders(200, response.getBytes().length);
 				request.getResponseBody().write(response.getBytes());

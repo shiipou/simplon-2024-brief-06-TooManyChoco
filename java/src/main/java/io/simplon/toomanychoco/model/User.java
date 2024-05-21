@@ -2,15 +2,16 @@ package io.simplon.toomanychoco.model;
 
 public class User {
 
-
 	private String username;
 	private String firstname;
 	private String email;
 	private String password;
 
-	public User() {
+	// constructeur vide par défaut à conserver car sans json parser ne fonctionnera pas
+	public User(){
 
 	}
+
 	public User(String username, String firstname, String email, String password) {
 		this.username = username;
 		this.firstname = firstname;
@@ -20,8 +21,13 @@ public class User {
 
 	public User(String username, String firstname) {
 		this.username = username;
-		this.firstname = firstname;
+		this.firstname = firstname;	
 	}
+
+	// public User(String email, String password) {
+	// 	this.email = email;
+	// 	this.password = password;
+	// }
 
 	public String getUsername() {
 		return username;
