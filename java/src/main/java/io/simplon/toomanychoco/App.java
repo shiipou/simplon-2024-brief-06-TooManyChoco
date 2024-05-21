@@ -18,6 +18,8 @@ import io.simplon.toomanychoco.model.User;
 
 import io.simplon.toomanychoco.repository.PastryRepository;
 import io.simplon.toomanychoco.model.User;
+import io.simplon.toomanychoco.repository.EventRepository;
+import io.simplon.toomanychoco.repository.EventRespository;
 import io.simplon.toomanychoco.repository.UserRepository;
 import io.simplon.toomanychoco.repository.EventRespository;
 import io.simplon.toomanychoco.repository.EventRepository;
@@ -38,10 +40,9 @@ public class App {
 	}
 
 	private final UserRepository userRepository = UserRepository.getInstance();
-
+	private final EventRespository eventRespository = EventRespository.getInstance();
 	private final PastryRepository pastryRepository = PastryRepository.getInstance();
 	private final EventRepository eventRepository = EventRepository.getInstance();
-	private final EventRespository eventRespository = EventRespository.getInstance();
 
 	private App() {
 	}
