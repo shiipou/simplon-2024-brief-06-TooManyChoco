@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Calendar from "react-calendar";
-import "../assets/styles/CalendarContainer.css";
-import "../assets/styles/reserve.css";
+import "./CalendarContainer.css";
+import "./reserve.css";
 import "react-calendar/dist/Calendar.css";
 
 function CalendarContainer() {
