@@ -1,6 +1,6 @@
 // NewAccount.js
 import React from 'react';
-import '../styles/NewAccount.css';
+import './NewAccount.css';
 
 const NewAccount = () => {
    return (
