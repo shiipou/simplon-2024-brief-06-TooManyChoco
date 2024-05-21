@@ -95,6 +95,25 @@ public class App {
 			}
 		}));
 
+		//Handler endpoint POST createUser ('/create/user')
+		server.createContext("/create/user", request ->{
+
+			//Lire le corps de la requete sous forme de String
+			String body = new String(request.getRequestBody().readAllBytes());
+			//Parser la String en objet JSON
+			ObjectMapper objectMapper = new ObjectMapper();
+//			User user = new User();
+			try {
+				User user = objectMapper.readValue(body, User.class);
+				//Traitement du user
+				userRepository.createUser(user);
+				//Réponse au client
+				request.sendResponseHeaders(201, 0);
+				request.getResponseBody().close();
+			} catch(Exception e){
+				e.printStackTrace();
+			}
+		});
 
 		// --------------------------------------------------------------------------------
 
@@ -115,7 +134,7 @@ public class App {
 
 		// --------------------------------------------------------------------------------
 		// Create a new handler with Database access ('/events')
-		server.createContext("/events", (HttpExchange request) -> {
+		server.createContext("/events", (request) -> {
 			ObjectMapper objectMapper = new ObjectMapper();
 			String method = request.getRequestMethod();
 			
