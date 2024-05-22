@@ -53,9 +53,10 @@ public class EventRepository {
             while(resultSet.next()) {
                 Date event_date = resultSet.getDate("event_date");
                 User creator = UserRepository.getInstance().findByUsername(resultSet.getString("creator")).get();
-                Integer event_id = resultSet.getInt("event_id");
+                int event_id = resultSet.getInt("event_id");
                 List<Pastry> pastries = getPastryByEventId(event_id);
-                events.add(new Event(event_id, event_date, creator, pastries ));
+                boolean isAnonyme = resultSet.getBoolean("isAnonyme");
+                events.add(new Event(event_id, event_date, creator, pastries, isAnonyme));
             }                
         
         } catch (SQLException e) {
@@ -69,7 +70,7 @@ public class EventRepository {
     // ---------------------------------------------------------------------------------------------------------
     
     public void save(Event event, List<Pastry> pastries) throws SQLException {
-        String insertEventSQL = "INSERT INTO event (event_date, creator) VALUES (?, ?) RETURNING event_id";
+        String insertEventSQL = "INSERT INTO event (event_date, creator, isAnonyme) VALUES (?, ?, ?) RETURNING event_id";
         String insertEventPastrySQL = "INSERT INTO event_pastry (event_id, pastry_id) VALUES (?, ?)";
     
         try (
@@ -80,6 +81,7 @@ public class EventRepository {
             java.sql.Date formattedDate = java.sql.Date.valueOf(DateFormat.getDateInstance(DateFormat.SHORT, Locale.ROOT).format(event.getEvent_date()));
             statementEvent.setDate(1, formattedDate);
             statementEvent.setString(2, event.getCreator().getUsername());
+            statementEvent.setBoolean(3, event.getIsAnonyme());
             ResultSet resultSet = statementEvent.executeQuery();
             resultSet.next();
             int eventId = resultSet.getInt("event_id");
