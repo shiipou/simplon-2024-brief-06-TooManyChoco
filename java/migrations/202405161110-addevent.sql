@@ -21,11 +21,11 @@ CREATE TABLE IF NOT EXISTS event_pastry (
 -- Insertion dans les tables --------------
 
 INSERT INTO pastry ("pastry_name") VALUES
-('croissant'),
-('pain au chocolat'),
-('pain aux raisins'),
-('croissant aux amandes'),
-('chouquette');
+('croissants'),
+('pains aux chocolats'),
+('pains aux raisins'),
+('croissants aux amandes'),
+('chouquettes');
 
 INSERT INTO event ("event_date", "creator") VALUES
 ('2024-05-16', 'shiipou');
