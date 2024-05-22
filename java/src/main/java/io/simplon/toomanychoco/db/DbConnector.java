@@ -3,11 +3,12 @@ package io.simplon.toomanychoco.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class DbConnector {
-	private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/TooManyChoco";
-	private static final String JDBC_USERNAME = "postgres";
-	private static final String JDBC_PASSWORD = "postgres";
+	private static final String JDBC_URL = Optional.ofNullable(System.getenv("JDBC_URL")).orElse("jdbc:postgresql://localhost:5432/TooManyChoco");
+	private static final String JDBC_USERNAME = Optional.ofNullable(System.getenv("JDBC_USERNAME")).orElse("postgres");
+	private static final String JDBC_PASSWORD = Optional.ofNullable(System.getenv("JDBC_PASSWORD")).orElse("postgres");
 
 	private static Connection connection = null;
 
