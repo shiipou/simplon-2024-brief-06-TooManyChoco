@@ -15,7 +15,10 @@ const LoginForm = () => {
     const { email, password } = Object.fromEntries(new FormData(event.target))
 
     if (email && password) {
+      
       const user = await userLogin(email, password)
+      console.log("connexion réussie")
+
 
       if (user) {
         setUserToken(user.token)
