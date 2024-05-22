@@ -8,24 +8,26 @@ const LoginForm = () => {
   const { setUserToken } = useContext(UserContext);
   const navigate = useNavigate();
 
+  const handleSubmit = useCallback(
+    async (event) => {
+      event.preventDefault();
 
-  const handleSubmit = useCallback(async (event) => {
-    event.preventDefault();
+      const { email, password } = Object.fromEntries(
+        new FormData(event.target)
+      );
 
-    const { email, password } = Object.fromEntries(new FormData(event.target))
+      if (email && password) {
+        const user = await userLogin(email, password);
+        console.log("connexion réussie");
 
-    if (email && password) {
-      
-      const user = await userLogin(email, password)
-      console.log("connexion réussie")
-
-
-      if (user) {
-        setUserToken(user.token)
-        navigate('/')
+        if (user) {
+          setUserToken(user.token);
+          navigate("/");
+        }
       }
-    }
-  }, [navigate, setUserToken]);
+    },
+    [navigate, setUserToken]
+  );
 
   return (
     <div className="main-container">

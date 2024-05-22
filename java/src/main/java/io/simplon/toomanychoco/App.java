@@ -5,7 +5,11 @@ import java.util.List;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+<<<<<<< HEAD
 import com.sun.net.httpserver.*;
+=======
+import com.sun.net.httpserver.HttpServer;
+>>>>>>> beta
 
 import io.simplon.toomanychoco.db.DbConnector;
 import io.simplon.toomanychoco.db.DbMigrator;
@@ -29,7 +33,11 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.sql.*;
 import java.util.concurrent.Executors;
+<<<<<<< HEAD
 // import com.fasterxml.jackson.databind.ObjectMapper;
+=======
+import com.fasterxml.jackson.databind.ObjectMapper;
+>>>>>>> beta
 
 
 public class App {
