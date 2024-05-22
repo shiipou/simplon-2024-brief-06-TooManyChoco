@@ -19,7 +19,10 @@ const LoginForm = () => {
         sessionStorage.setItem('username', user.username);
 
     if (email && password) {
+      
       const user = await userLogin(email, password)
+      console.log("connexion réussie")
+
 
 
 
