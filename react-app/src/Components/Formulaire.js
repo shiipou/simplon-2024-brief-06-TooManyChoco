@@ -26,7 +26,8 @@ export default function Formulaire(props) {
   let nouveauChoixInput = useRef();
 
   // sera utilisé par la suite
-  // let [user, setUser] = useState();
+  let [user, setUser] = useState('bob');
+  let [event_date, setEvent_date] = useState("2024-05-26");
 
   let [anonyme, setAnonyme] = useState(false);
 
@@ -45,7 +46,7 @@ export default function Formulaire(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const event = await createEvent(choix, anonyme);
+    const event = await createEvent(choix, anonyme, user, event_date);
     if (event) {
       navigate("/");
     }
