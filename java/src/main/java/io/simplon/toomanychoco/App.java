@@ -28,6 +28,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.concurrent.Executors;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.net.httpserver.Headers;
+
 
 
 public class App {
@@ -206,35 +208,43 @@ public class App {
 		}));
 
 
-		server.createContext("/event", (request -> {
+		server.createContext("/event", (httpExchange) -> {
 			try {
-				// on recherche le contenu dans l'url après /event/ XXXXXX
-				String date = request.getRequestURI().getPath().split("/")[2];
-
+				// Extract the content from the URL after "/event/"
+				String date = httpExchange.getRequestURI().getPath().split("/")[2];
+		
 				Event event = eventRespository
 						.findByEventDate(date)
-						.orElseThrow(
-								() -> new EventNotFoundException(
-										String.format("Event '%s' didn't exist in database.", date)));
+						.orElseThrow(() -> new EventNotFoundException(
+								String.format("Event '%s' didn't exist in the database.", date)));
+		
+				// Serialize the event object into a JSON string
 				ObjectMapper objectMapper = new ObjectMapper();
 				String response = objectMapper.writeValueAsString(event);
-
-
-				request.sendResponseHeaders(200, response.getBytes().length);
-				request.getResponseBody().write(response.getBytes());
-				request.getResponseBody().close();
+		
+				// Set CORS headers
+				Headers responseHeaders = httpExchange.getResponseHeaders();
+				responseHeaders.set("Access-Control-Allow-Origin", "*");
+				responseHeaders.set("Access-Control-Allow-Methods", "GET, POST");
+				responseHeaders.set("Access-Control-Allow-Headers", "Content-Type");
+		
+				// Send the HTTP response
+				httpExchange.sendResponseHeaders(200, response.getBytes().length);
+				httpExchange.getResponseBody().write(response.getBytes());
+				httpExchange.getResponseBody().close();
 			} catch (IndexOutOfBoundsException error) {
-				String response = "Event parameter is missing. Example : `/event/2024-05-16` will return  event_date | event_id | first_name | pastry_name.";
-				request.sendResponseHeaders(400, response.getBytes().length);
-				request.getResponseBody().write(response.getBytes());
-				request.getResponseBody().close();
+				String response = "Event parameter is missing. Example: `/event/2024-05-16` will return event_date | event_id | first_name | pastry_name.";
+				httpExchange.sendResponseHeaders(400, response.getBytes().length);
+				httpExchange.getResponseBody().write(response.getBytes());
+				httpExchange.getResponseBody().close();
 			} catch (EventNotFoundException error) {
 				String response = error.getMessage();
-				request.sendResponseHeaders(404, response.getBytes().length);
-				request.getResponseBody().write(response.getBytes());
-				request.getResponseBody().close();
+				httpExchange.sendResponseHeaders(404, response.getBytes().length);
+				httpExchange.getResponseBody().write(response.getBytes());
+				httpExchange.getResponseBody().close();
 			}
-		}));
+		});
+		
 
 
 		// Start the server in a new thread

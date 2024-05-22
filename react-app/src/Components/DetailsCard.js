@@ -7,48 +7,51 @@ import "./DetailsCard.css"; // Style pour DetailsCard
 function DetailsCard() {
   // Initialisation des informations de l'événement avec des données factices
   const [eventInfo, setEventInfo] = useState({
-    firstName: "Foo Bar",
-    date: "2024-05-16",
-    viennoiseries: [{ name: "miamiam" }, { name: "nomnom" }],
+    // firstName: "Foo Bar",
+    // date: "2024-05-16",
+    // viennoiseries: [{ name: "miamiam" }, { name: "nomnom" }],
   });
   // Jours de la semaine à afficher
   const WeekDays = [
-    "Dimanche",
     "Lundi",
     "Mardi",
     "Mercredi",
     "Jeudi",
     "Vendredi",
     "Samedi",
+    "Dimanche"
   ];
   // Effet pour charger les données de l'événement (commenté pour le moment)
   useEffect(() => {
-    // handleFetch(1).then((data) => {
-    //   setUserInfo(data);
-    // });
-  }, []);
+    handleFetch("2024-05-16").then((data) => {
+      setEventInfo(data);
+    });
+  });
 
+  let dateFormatted = new Date(eventInfo.event_date).toLocaleDateString("FR");
+  let dateUs = new Date(eventInfo.event_date)
+  
   return (
     <>
       <div className="container">
         <div className="content">
           {/* Jour de l'événement */}
-          <h1>{WeekDays[new Date(eventInfo.date).getDay()]}</h1>
+          <h1>{WeekDays[dateUs.getDay() - 1]}</h1>
           {/* Date de l'événement */}
-          <p>{eventInfo.date}</p>
+          <p>{dateFormatted}</p>
           <div className="info">
             <div className="userContainer">
               <FaUser className="userIcon" />
               {/* Nom de l'utilisateur */}
-              <h2 className="userName">{eventInfo.firstName}</h2>
+              <h2 className="userName">{eventInfo?.creator?.firstname}</h2>
             </div>
             <div className="foodContainer">
               <GiCroissant className="foodIcon" />
               {/* Liste des viennoiseries */}
               <ul>
-                {eventInfo?.viennoiseries.map((viennoiserie, index) => (
+                {eventInfo?.pastryList?.map((pastry, index) => (
                   <li key={index}>
-                    <h2 className="foodName">{viennoiserie.name}</h2>
+                    <h2 className="foodName">{pastry}</h2>
                   </li>
                 ))}
               </ul>
