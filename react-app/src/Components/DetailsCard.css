@@ -23,6 +23,8 @@
   color: white;
   margin-left: 10px;
   margin-block-end: 2px;
+  align-items: start;
+  
 }
 
 .content p {
@@ -58,6 +60,7 @@
   margin-block: 0;
   margin-left: 20px;
   color: white;
+  font-size: medium;
 }
 
 ul {

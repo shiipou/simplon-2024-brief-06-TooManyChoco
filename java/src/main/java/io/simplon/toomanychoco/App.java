@@ -24,7 +24,20 @@ import io.simplon.toomanychoco.repository.EventRespository;
 import io.simplon.toomanychoco.repository.PastryRepository;
 import io.simplon.toomanychoco.repository.UserRepository;
 
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.concurrent.Executors;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.net.httpserver.Headers;
+
+
+
+
 public class App {
+
     private static final App instance = new App();
 
     public static App getInstance() {
@@ -265,4 +278,5 @@ public class App {
         app.init();
         app.start(10);
     }
+
 }
