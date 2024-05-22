@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faCheckSquare, faSquare } from "@fortawesome/free-solid-svg-icons";
 import { createEvent } from "../Services/eventApi";
@@ -9,15 +9,18 @@ import "./formulaire.css";
 export default function Formulaire(props) {
   const navigate = useNavigate();
 
-  // tableau provisoire, sera plus tard issu d'un fetch vers l'API
-  let viennoiseries = [
-    "Croissant",
-    "Pain au chocolat",
-    "Pain aux raisins",
-    "Croissant aux amandes",
-    "Chouquettes",
-  ];
+  // Remplacer ce tableau par un fetch à la bdd via l'api
+  const [pastries, setPastries] = useState([]);
 
+  useEffect(() => {
+    fetch('http://localhost:8080/pastries')
+      .then((res) => res.json())
+      .then((data) => {
+        setPastries(data);
+      })
+      .catch((error) => console.error("Error fetching pastries:", error));
+  }, []);
+  
   // etat (state)
   let [choix, setChoix] = useState([]);
   let nouveauChoixInput = useRef();
@@ -32,7 +35,6 @@ export default function Formulaire(props) {
   const addChoix = (event) => {
     event.preventDefault();
     setChoix([...choix, nouveauChoixInput.current.value]);
-    // console.log(choix);
     nouveauChoixInput.current.value = "";
   };
 
@@ -42,9 +44,6 @@ export default function Formulaire(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // console.log(choix);
-    // console.log(anonyme);
 
     const event = await createEvent(choix, anonyme);
     if (event) {
@@ -64,9 +63,9 @@ export default function Formulaire(props) {
         <div>
           <div className="formBox_choiceInput">
             <datalist id="viennoiseries">
-              {viennoiseries.map((element, index) => (
-                <option value={element} key={index}>
-                  {element}
+              {pastries?.map((element, index) => (
+                <option value={element.pastry_name} key={index}>
+                  {element.pastry_name}
                 </option>
               ))}
             </datalist>
