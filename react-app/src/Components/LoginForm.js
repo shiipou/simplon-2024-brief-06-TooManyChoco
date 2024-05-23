@@ -17,23 +17,11 @@ const LoginForm = () => {
         // console.log(user);
         // console.log("connexion réussie");
         sessionStorage.setItem('username', user.username);
-
-
-
-
-    if (email && password) {
-      
-      const user = await userLogin(email, password)
-      console.log("connexion réussie")
-
-
-
-
+        
         if (user) {
           setUserToken(user.token);
           navigate("/");
         }
-      }
     }
   }, [navigate, setUserToken]);
 
