@@ -18,6 +18,9 @@ const LoginForm = () => {
         // console.log("connexion réussie");
         sessionStorage.setItem('username', user.username);
 
+
+
+
     if (email && password) {
       
       const user = await userLogin(email, password)
