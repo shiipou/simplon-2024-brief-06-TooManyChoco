@@ -18,7 +18,7 @@ const LoginForm = () => {
 
       if (email && password) {
         const user = await userLogin(email, password);
-        sessionStorage.setItem = ('username', user.username)
+        sessionStorage.setItem = ("username", user.username)
 
         if (user) {
           // setUserToken(user.token);
