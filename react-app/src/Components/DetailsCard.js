@@ -3,14 +3,19 @@ import handleFetch from "../Services/eventService"; // Service pour gérer les r
 import { FaUser } from "react-icons/fa"; // Icône utilisateur
 import { GiCroissant } from "react-icons/gi"; // Icône croissant
 import "./DetailsCard.css"; // Style pour DetailsCard
+import { DateContext } from "../Providers/DateContext";
+import { useContext } from "react";
+
 
 function DetailsCard() {
+  const {date} = useContext(DateContext);
   // Initialisation des informations de l'événement avec des données factices
   const [eventInfo, setEventInfo] = useState({
     // firstName: "Foo Bar",
     // date: "2024-05-16",
     // viennoiseries: [{ name: "miamiam" }, { name: "nomnom" }],
   });
+  
   // Jours de la semaine à afficher
   const WeekDays = [
     "Lundi",
@@ -23,7 +28,7 @@ function DetailsCard() {
   ];
   // Effet pour charger les données de l'événement (commenté pour le moment)
   useEffect(() => {
-    handleFetch("2024-05-16").then((data) => {
+    handleFetch(date).then((data) => {
       setEventInfo(data);
     });
   });
