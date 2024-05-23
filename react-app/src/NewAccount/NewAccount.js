@@ -1,14 +1,17 @@
 // NewAccount.js
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import './NewAccount.css';
-import { useNavigate } from 'react-router-dom';
+import { UserCreate } from '../Services/UserCreate';
+import { useNavigate } from "react-router-dom";
+
+
 
 const NewAccount = () => {
-
   const navigate = useNavigate();
 
+
   const handleSubmitRegister = useCallback(
-    async (e) => {
+    (e) => {
       e.preventDefault();
   
       //récupérer les données du formulaire
@@ -16,16 +19,14 @@ const NewAccount = () => {
         new FormData(e.target)
       );
   
-      //que ça les envoie dans l'api pour les stocker dans notre BDD
+      //envoie dans l'api pour stocker les données dans notre BDD
       if(pseudo && prenom && email && password) {
-        const newUser = await createUser(pseudo, prenom, email, password);
+        UserCreate(pseudo, prenom, email, password);
+        navigate("/login");
         
-        //ça signale que la création a bien été prise en compte
-        
-        //que ça redirige sur le formulaire de login
-        if (newUser) {
-          navigate("/login");
-        }
+      //ça signale que la création a bien été prise en compte
+
+
       }
     }
   

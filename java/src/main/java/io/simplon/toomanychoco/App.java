@@ -25,17 +25,6 @@ import io.simplon.toomanychoco.repository.PastryRepository;
 import io.simplon.toomanychoco.repository.UserRepository;
 
 
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.concurrent.Executors;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.net.httpserver.Headers;
-
-
-
-
 public class App {
 
     private static final App instance = new App();
@@ -100,8 +89,8 @@ public class App {
             }
         }));
 
-        // Handler endpoint POST createUser ('/create/user')
-        server.createContext("/create/user", withCORS(request -> {
+        // Handler endpoint POST createUser ('/users')
+        server.createContext("/users", withCORS(request -> {
             if (request.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
                 request.sendResponseHeaders(204, -1);
                 return;
@@ -118,8 +107,8 @@ public class App {
                 // Réponse au client
                 request.sendResponseHeaders(201, 0);
                 request.getResponseBody().close();
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (SQLException e) {
+                request.sendResponseHeaders(500, 0);
             }
         }));
 
