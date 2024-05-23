@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<CalendarContainer />} />
           <Route path="/formulaire" element={<PageFormulaires />} />
-          <Route path="/details" element={<DetailsCard />} />
+          <Route path="/details:selectedDate" element={<DetailsCard />} />
           <Route path="/register" element={<NewAccount />} />
           <Route path="/login" element={<LoginForm />} />
         </Routes>

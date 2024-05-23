@@ -14,14 +14,22 @@ function CalendarContainer() {
     new Date("2024-05-24").toDateString(),
   ]);
 
+  const handleDayClick = (date) => {
+    const selectedDate = date.toISOString().split('T')[0]; // Format YYYY-MM-DD
+    window.location.href = `/details/${selectedDate}`;
+    console.log(selectedDate)
+  };
+
+
   return (
     <div className="calendar-container myCustomCalendar">
       {/* utilisation de la méthode Calendar dispo dans React */}
       <Calendar
         onChange={setDate}
+        onClickDay={handleDayClick}
         value={date}
         tileClassName={({ date }) =>
-          events.includes(date.toDateString()) ? "reserved" : ""
+          events?.includes(date.toDateString()) ? "reserved" : ""
         }
       />
     </div>
