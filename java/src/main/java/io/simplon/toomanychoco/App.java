@@ -200,10 +200,10 @@ public class App {
             }
         }));
 
-        server.createContext("/event", httpExchange -> {
+        server.createContext("/event", withCORS(request -> {
             try {
                 // Extract the content from the URL after "/event/"
-                String date = httpExchange.getRequestURI().getPath().split("/")[2];
+                String date = request.getRequestURI().getPath().split("/")[2];
 
                 Event event = eventRespository
                         .findByEventDate(date)
@@ -215,27 +215,27 @@ public class App {
                 String response = objectMapper.writeValueAsString(event);
 
                 // Set CORS headers
-                Headers responseHeaders = httpExchange.getResponseHeaders();
+               /*  Headers responseHeaders = httpExchange.getResponseHeaders();
                 responseHeaders.set("Access-Control-Allow-Origin", "*");
                 responseHeaders.set("Access-Control-Allow-Methods", "GET, POST");
-                responseHeaders.set("Access-Control-Allow-Headers", "Content-Type");
+                responseHeaders.set("Access-Control-Allow-Headers", "Content-Type"); */
 
                 // Send the HTTP response
-                httpExchange.sendResponseHeaders(200, response.getBytes().length);
-                httpExchange.getResponseBody().write(response.getBytes());
-                httpExchange.getResponseBody().close();
+                 request.sendResponseHeaders(200, response.getBytes().length);
+                request.getResponseBody().write(response.getBytes());
+                request.getResponseBody().close(); 
             } catch (IndexOutOfBoundsException error) {
                 String response = "Event parameter is missing. Example: `/event/2024-05-16` will return event_date | event_id | first_name | pastry_name.";
-                httpExchange.sendResponseHeaders(400, response.getBytes().length);
-                httpExchange.getResponseBody().write(response.getBytes());
-                httpExchange.getResponseBody().close();
+                request.sendResponseHeaders(400, response.getBytes().length);
+                request.getResponseBody().write(response.getBytes());
+                request.getResponseBody().close(); 
             } catch (EventNotFoundException error) {
                 String response = error.getMessage();
-                httpExchange.sendResponseHeaders(404, response.getBytes().length);
-                httpExchange.getResponseBody().write(response.getBytes());
-                httpExchange.getResponseBody().close();
+                request.sendResponseHeaders(404, response.getBytes().length);
+             request.getResponseBody().write(response.getBytes());
+                request.getResponseBody().close();
             }
-        });
+        }));
 
         // Start the server in a new thread
         server.setExecutor(Executors.newFixedThreadPool(numberOfThreads)); // Use a thread pool
