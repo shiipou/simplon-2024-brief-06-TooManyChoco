@@ -34,6 +34,7 @@ import com.sun.net.httpserver.Headers;
 
 
 public class App {
+
     private static final App instance = new App();
 
     public static App getInstance() {
@@ -60,7 +61,7 @@ public class App {
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
 
         // Create a basic handler for index route ('/')
-        server.createContext("/", (request -> {
+        server.createContext("/", withCORS(request -> {
             String response = "Hello, world!";
             request.sendResponseHeaders(200, response.getBytes().length);
             request.getResponseBody().write(response.getBytes());
@@ -68,7 +69,7 @@ public class App {
         }));
 
         // Create a new handler with Database access ('/hello/:username')
-        server.createContext("/hello", (request -> {
+        server.createContext("/hello", withCORS(request -> {
             try {
                 String username = request.getRequestURI().getPath().split("/")[2];
 
@@ -80,8 +81,8 @@ public class App {
 
                 String response = String.format("Hello, %s", user.getFirstname());
 
-                // request.sendResponseHeaders(200, response.getBytes().length);
-                // request.getResponseBody().write(response.getBytes());
+                request.sendResponseHeaders(200, response.getBytes().length);
+                request.getResponseBody().write(response.getBytes());
                 request.getResponseBody().close();
             } catch (IndexOutOfBoundsException error) {
                 String response = "Username parameter is missing. Example : `/hello/bob` will return `Hello, Bob!`.";
@@ -97,13 +98,16 @@ public class App {
         }));
 
         // Handler endpoint POST createUser ('/create/user')
-        server.createContext("/create/user", request -> {
+        server.createContext("/create/user", withCORS(request -> {
+            if (request.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
+                request.sendResponseHeaders(204, -1);
+                return;
+            }
 
             // Lire le corps de la requete sous forme de String
             String body = new String(request.getRequestBody().readAllBytes());
             // Parser la String en objet JSON
             ObjectMapper objectMapper = new ObjectMapper();
-            // User user = new User();
             try {
                 User user = objectMapper.readValue(body, User.class);
                 // Traitement du user
@@ -114,12 +118,14 @@ public class App {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        });
-
-        // --------------------------------------------------------------------------------
+        }));
 
         // Create a new handler with Database access ('/pastries')
-        server.createContext("/pastries", (request -> {
+        server.createContext("/pastries", withCORS(request -> {
+            if (request.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
+                request.sendResponseHeaders(204, -1);
+                return;
+            }
 
             List<Pastry> pastries = pastryRepository.findAll();
 
@@ -129,27 +135,22 @@ public class App {
             request.sendResponseHeaders(200, response.getBytes().length);
             request.getResponseBody().write(response.getBytes());
             request.getResponseBody().close();
-
         }));
 
-        // --------------------------------------------------------------------------------
         // Create a new handler with Database access ('/events')
-        server.createContext("/events", (request) -> {
+        server.createContext("/events", withCORS(request -> {
             ObjectMapper objectMapper = new ObjectMapper();
             String method = request.getRequestMethod();
 
-            /*
-             * if (method.equalsIgnoreCase("GET")) {
-             * List<Event> events = eventRepository.findAll();
-             * String response = objectMapper.writeValueAsString(events);
-             * request.sendResponseHeaders(200, response.getBytes().length);
-             * request.getResponseBody().write(response.getBytes());
-             * request.getResponseBody().close();
-             */
+            if (method.equalsIgnoreCase("OPTIONS")) {
+                request.sendResponseHeaders(204, -1);
+                return;
+            }
 
-            /* } else */ if (method.equalsIgnoreCase("POST")) {
+            if (method.equalsIgnoreCase("POST")) {
                 try {
                     String body = new String(request.getRequestBody().readAllBytes());
+                    System.out.println("body : " + body);
                     Event event = objectMapper.readValue(body, Event.class);
 
                     // Save the event to the database
@@ -157,7 +158,6 @@ public class App {
 
                     request.sendResponseHeaders(201, 0);
                     request.getResponseBody().close();
-
                 } catch (Exception e) {
                     e.printStackTrace();
                     String response = "Failed to create event";
@@ -168,15 +168,16 @@ public class App {
             } else {
                 request.sendResponseHeaders(405, -1); // Method Not Allowed
             }
+        }));
 
-        });
-
-        // --------------------------------------------------------------------------------
-
-        // Vérifie qu'un user existe en base si oui cette route renvoie les informations
-        // d'user
-        server.createContext("/login", (request -> {
+        // Vérifie qu'un user existe en base si oui cette route renvoie les informations d'user
+        server.createContext("/login", withCORS(request -> {
             String method = request.getRequestMethod();
+            if (method.equalsIgnoreCase("OPTIONS")) {
+                request.sendResponseHeaders(204, -1);
+                return;
+            }
+
             if (method.equalsIgnoreCase("POST")) {
                 try {
                     ObjectMapper objectMapper = new ObjectMapper();
@@ -191,8 +192,7 @@ public class App {
                             .findIsUserExist(userInfo)
                             .orElseThrow(
                                     () -> new UserNotFoundException(
-                                            String.format("User '%s' didn't exist in database.",
-                                                    ((User) userInfo).getEmail())));
+                                            String.format("User '%s' didn't exist in database.", userInfo.getEmail())));
 
                     String response = objectMapper.writeValueAsString(user);
 
@@ -210,31 +210,39 @@ public class App {
             }
         }));
 
-        server.createContext("/event", (request -> {
+        server.createContext("/event", withCORS(request -> {
             try {
-                // on recherche le contenu dans l'url après /event/ XXXXXX
+                // Extract the content from the URL after "/event/"
                 String date = request.getRequestURI().getPath().split("/")[2];
 
                 Event event = eventRespository
                         .findByEventDate(date)
-                        .orElseThrow(
-                                () -> new EventNotFoundException(
-                                        String.format("Event '%s' didn't exist in database.", date)));
+                        .orElseThrow(() -> new EventNotFoundException(
+                                String.format("Event '%s' didn't exist in the database.", date)));
+
+                // Serialize the event object into a JSON string
                 ObjectMapper objectMapper = new ObjectMapper();
                 String response = objectMapper.writeValueAsString(event);
 
-                request.sendResponseHeaders(200, response.getBytes().length);
+                // Set CORS headers
+               /*  Headers responseHeaders = httpExchange.getResponseHeaders();
+                responseHeaders.set("Access-Control-Allow-Origin", "*");
+                responseHeaders.set("Access-Control-Allow-Methods", "GET, POST");
+                responseHeaders.set("Access-Control-Allow-Headers", "Content-Type"); */
+
+                // Send the HTTP response
+                 request.sendResponseHeaders(200, response.getBytes().length);
                 request.getResponseBody().write(response.getBytes());
-                request.getResponseBody().close();
+                request.getResponseBody().close(); 
             } catch (IndexOutOfBoundsException error) {
-                String response = "Event parameter is missing. Example : `/event/2024-05-16` will return  event_date | event_id | first_name | pastry_name.";
+                String response = "Event parameter is missing. Example: `/event/2024-05-16` will return event_date | event_id | first_name | pastry_name.";
                 request.sendResponseHeaders(400, response.getBytes().length);
                 request.getResponseBody().write(response.getBytes());
-                request.getResponseBody().close();
+                request.getResponseBody().close(); 
             } catch (EventNotFoundException error) {
                 String response = error.getMessage();
                 request.sendResponseHeaders(404, response.getBytes().length);
-                request.getResponseBody().write(response.getBytes());
+             request.getResponseBody().write(response.getBytes());
                 request.getResponseBody().close();
             }
         }));
@@ -244,6 +252,22 @@ public class App {
         server.start();
 
         System.out.println("Server started on port 8080");
+    }
+
+    private static HttpHandler withCORS(HttpHandler handler) {
+        return exchange -> {
+            Headers headers = exchange.getResponseHeaders();
+            headers.add("Access-Control-Allow-Origin", "*");
+            headers.add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+            headers.add("Access-Control-Allow-Headers", "Content-Type");
+
+            if (exchange.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
+                exchange.sendResponseHeaders(204, -1);
+                return;
+            }
+
+            handler.handle(exchange);
+        };
     }
 
     public static void main(String[] args) throws SQLException, IOException {
