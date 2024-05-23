@@ -24,18 +24,6 @@ import io.simplon.toomanychoco.repository.EventRespository;
 import io.simplon.toomanychoco.repository.PastryRepository;
 import io.simplon.toomanychoco.repository.UserRepository;
 
-
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.concurrent.Executors;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.net.httpserver.Headers;
-
-
-
-
 public class App {
 
     private static final App instance = new App();
@@ -145,9 +133,23 @@ public class App {
             ObjectMapper objectMapper = new ObjectMapper();
             String method = request.getRequestMethod();
 
-            if (method.equalsIgnoreCase("OPTIONS")) {
-                request.sendResponseHeaders(204, -1);
-                return;
+            /*
+             * if (method.equalsIgnoreCase("OPTIONS")) {
+             * request.sendResponseHeaders(204, -1);
+             * return;
+             * }
+             */
+            if (method.equalsIgnoreCase("GET")) {
+                /*
+                 * request.sendResponseHeaders(204, -1);
+                 * return;
+                 */
+                List<Event> events = eventRepository.findAll();
+                String response = objectMapper.writeValueAsString(events);
+
+                request.sendResponseHeaders(200, response.getBytes().length);
+                request.getResponseBody().write(response.getBytes());
+                request.getResponseBody().close();
             }
 
             if (method.equalsIgnoreCase("POST")) {
@@ -173,7 +175,8 @@ public class App {
             }
         }));
 
-        // Vérifie qu'un user existe en base si oui cette route renvoie les informations d'user
+        // Vérifie qu'un user existe en base si oui cette route renvoie les informations
+        // d'user
         server.createContext("/login", withCORS(request -> {
             String method = request.getRequestMethod();
             if (method.equalsIgnoreCase("OPTIONS")) {
@@ -227,25 +230,19 @@ public class App {
                 ObjectMapper objectMapper = new ObjectMapper();
                 String response = objectMapper.writeValueAsString(event);
 
-                // Set CORS headers
-               /*  Headers responseHeaders = httpExchange.getResponseHeaders();
-                responseHeaders.set("Access-Control-Allow-Origin", "*");
-                responseHeaders.set("Access-Control-Allow-Methods", "GET, POST");
-                responseHeaders.set("Access-Control-Allow-Headers", "Content-Type"); */
-
                 // Send the HTTP response
-                 request.sendResponseHeaders(200, response.getBytes().length);
+                request.sendResponseHeaders(200, response.getBytes().length);
                 request.getResponseBody().write(response.getBytes());
-                request.getResponseBody().close(); 
+                request.getResponseBody().close();
             } catch (IndexOutOfBoundsException error) {
                 String response = "Event parameter is missing. Example: `/event/2024-05-16` will return event_date | event_id | first_name | pastry_name.";
                 request.sendResponseHeaders(400, response.getBytes().length);
                 request.getResponseBody().write(response.getBytes());
-                request.getResponseBody().close(); 
+                request.getResponseBody().close();
             } catch (EventNotFoundException error) {
                 String response = error.getMessage();
                 request.sendResponseHeaders(404, response.getBytes().length);
-             request.getResponseBody().write(response.getBytes());
+                request.getResponseBody().write(response.getBytes());
                 request.getResponseBody().close();
             }
         }));
