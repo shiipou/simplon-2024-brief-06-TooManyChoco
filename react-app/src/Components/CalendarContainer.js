@@ -4,6 +4,7 @@ import "./CalendarContainer.css";
 import "./reserve.css";
 import "react-calendar/dist/Calendar.css";
 
+
 function CalendarContainer() {
   const [date, setDate] = useState(new Date());
   // création en dur d'évènements réservés pour afficher le design
@@ -18,6 +19,7 @@ function CalendarContainer() {
     const selectedDate = date.toISOString().split('T')[0]; // Format YYYY-MM-DD
     window.location.href = `/details/${selectedDate}`;
     console.log(selectedDate)
+    
   };
 
 
