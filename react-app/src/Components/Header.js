@@ -26,7 +26,7 @@ export default function Header() {
       {" "}
       {/* ternaire pour ajouter afficher ou cacher la navbar en fonction de l'état de showLinks */}
       <div className="logo-and-text-container">
-        <img className="logo" src={logo} alt="logo"></img>
+        <img className="logoHeader" src={logo} alt="logo"></img>
         <ul className="navbar-links">
           <li className="navbar-item">
             <Link id="link_Styles" to="/">
