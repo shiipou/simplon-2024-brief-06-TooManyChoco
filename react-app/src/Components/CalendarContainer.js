@@ -23,8 +23,17 @@ function CalendarContainer() {
 
   const handleDayClick = (date) => {
     const selectedDate = moment(date).tz('Europe/Paris').format('YYYY-MM-DD');
-    console.log('Date formatée:', selectedDate);
-    navigate(`/details/${selectedDate}`);
+    // console.log('Date formatée:', selectedDate);
+   
+
+    if (events.includes(new Date(date).toDateString())) {
+      // evenement present
+      navigate(`/details/${selectedDate}`);
+    } else {
+      // evenement pas présent
+      navigate(`/formulaire`);
+    }
+ 
     
   };
 
