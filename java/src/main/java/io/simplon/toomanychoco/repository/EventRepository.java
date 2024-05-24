@@ -25,7 +25,7 @@ public class EventRepository {
 
     // ---------------------------------------------------------------------------------------------------------
 
-    private static final String SQL_FIND_ALL = "SELECT e.event_date, e.event_id , u.username , p.pastry_name FROM event e JOIN users u ON e.creator = username JOIN event_pastry ep ON e.event_id = ep.event_id JOIN pastry p ON ep.pastry_id = p.pastry_id ORDER BY e.event_date";
+    private static final String SQL_FIND_ALL = "SELECT e.event_date, e.event_id , u.username , e.isAnonyme, p.pastry_name FROM event e JOIN users u ON e.creator = username JOIN event_pastry ep ON e.event_id = ep.event_id JOIN pastry p ON ep.pastry_id = p.pastry_id ORDER BY e.event_date";
     /* private static final String SQL_POST_EVENT = "INSERT INTO event (event_date, creator, pastries) VALUES (?, ?)"; */
     
 
@@ -49,10 +49,11 @@ public class EventRepository {
 
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL);) {
             ResultSet resultSet = statement.executeQuery();
+            System.out.println("resultset : " + resultSet.toString());
 
             while(resultSet.next()) {
                 Date event_date = resultSet.getDate("event_date");
-                User creator = UserRepository.getInstance().findByUsername(resultSet.getString("creator")).get();
+                User creator = UserRepository.getInstance().findByUsername(resultSet.getString("username")).get();
                 int event_id = resultSet.getInt("event_id");
                 List<Pastry> pastries = getPastryByEventId(event_id);
                 boolean isAnonyme = resultSet.getBoolean("isAnonyme");
