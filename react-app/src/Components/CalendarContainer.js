@@ -12,15 +12,9 @@ import DetailsCard from "./DetailsCard";
 
 function CalendarContainer() {
   const { date, setDate } = useContext(DateContext);
+  const [events, setEvents] = useState([]);
   const navigate = useNavigate();
-  // création en dur d'évènements réservés pour afficher le design
-  // const [events, setEvents] = useState([
-  //   // new Date("2024-05-09").toDateString(),
-  //   // new Date("2024-05-10").toDateString(),
-  //   // new Date("2024-05-15").toDateString(),
-  //   // new Date("2024-05-24").toDateString(),
-  // ]);
-
+  
   const handleDayClick = (date) => {
     const selectedDate = moment(date).tz('Europe/Paris').format('YYYY-MM-DD');
     // console.log('Date formatée:', selectedDate);
@@ -39,7 +33,7 @@ function CalendarContainer() {
 
   sessionStorage.getItem("username") ?? navigate("/");
 
-  const [events, setEvents] = useState([]);
+  
   useEffect(() => {
     fetch('http://localhost:8080/events')
       .then((res) => res.json())
