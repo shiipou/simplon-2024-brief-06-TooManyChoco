@@ -10,7 +10,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
 }
  
 .form-container {
@@ -69,4 +68,9 @@
 #style_link {
   text-decoration: none;
   color: rgb(198,34,34);
+  font-weight: bold;
+}
+
+#style_link:hover {
+  text-decoration: underline;
 }

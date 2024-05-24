@@ -9,9 +9,11 @@ footer{
 
 }
 
-.logo {
-padding-top: 10px;
-justify-self: flex-end;}
+.logoFooter {
+  width: 15vh;
+  height: 15vh;
+  padding-top: 2rem;
+  justify-self: flex-end;}
 
 
 .footer-div{
@@ -34,11 +36,9 @@ justify-self: flex-end;}
       background: linear-gradient(-2deg,rgb(198, 34, 34),rgb(198, 34, 34) 69%,rgb(0, 0, 0,0.5) 70%,rgba(0, 0, 0, 0) 72%);
       }
 
-    .logo {
-      padding-top: 25px;
-      height:100px;
+    .logoFooter {
+      padding-top: 2.5rem;
       width: auto;
-      justify-self: flex-end;}
   }
 
   .footer-text {
@@ -49,7 +49,7 @@ justify-self: flex-end;}
 
   .footer-div{
     width: 70%;
-      }
-
+  }
+}
 
   
