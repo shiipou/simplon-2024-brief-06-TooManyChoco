@@ -97,6 +97,11 @@ public class Event {
         this.isAnonyme = isAnonyme;
     }
 
+    @Override
+    public String toString() {
+        return "Event [toString()=" + super.toString() + "]";
+    }
+
 
 
 }
