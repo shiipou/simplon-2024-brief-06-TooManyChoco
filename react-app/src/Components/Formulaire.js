@@ -25,13 +25,19 @@ export default function Formulaire(props) {
   let [choix, setChoix] = useState([]);
   let nouveauChoixInput = useRef();
 
-  // sera utilisé par la suite
   let [user, setUser] = useState(sessionStorage.getItem("username"));
+  // sera utilisé par la suite
   let [event_date, setEvent_date] = useState("2024-06-03");
 
   let [anonyme, setAnonyme] = useState(false);
 
   //logique (fonctions)
+  useEffect(() => {
+    if (!user) {
+      navigate("/login"); // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
+    }
+  }, [user, navigate]);
+
 
   const addChoix = (event) => {
     event.preventDefault();

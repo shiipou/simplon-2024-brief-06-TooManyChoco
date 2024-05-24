@@ -9,14 +9,10 @@ import LoginForm from "./LoginForm";
 function CalendarContainer() {
   const [date, setDate] = useState(new Date());
   const navigate = useNavigate();
-  // création en dur d'évènements réservés pour afficher le design
-  const [events, setEvents] = useState([
-    new Date("2024-05-09").toDateString(),
-    new Date("2024-05-10").toDateString(),
-    new Date("2024-05-15").toDateString(),
-    new Date("2024-05-24").toDateString(),
-  ]);
+ 
+ 
   sessionStorage.getItem("username") ?? navigate("/");
+  
   const [events, setEvents] = useState([]);
   useEffect(() => {
     fetch('http://localhost:8080/events')
