@@ -1,7 +1,7 @@
 import { useCallback, useContext } from "react";
 import "./loginForm.css";
 import { UserContext } from "../Providers/UserContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { userLogin } from "../Services/UserLogin";
 
 const LoginForm = () => {
@@ -38,7 +38,7 @@ const LoginForm = () => {
         <h3>Connexion</h3>
         <form onSubmit={handleSubmit}>
           <div>
-            <label>Adresse</label>
+            <label>Adresse email</label>
             <input
               type="email"
               name="email"
@@ -61,6 +61,7 @@ const LoginForm = () => {
           </div>
           <div className="mot_passe_oublie">
             <a>Mot de passe oublié ?</a>
+            <Link to="/register" id="style_link">Créer mon compte</Link>
           </div>
         </form>
       </div>
