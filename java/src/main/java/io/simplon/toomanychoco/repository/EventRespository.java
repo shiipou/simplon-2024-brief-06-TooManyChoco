@@ -1,14 +1,17 @@
 package io.simplon.toomanychoco.repository;
 
-import io.simplon.toomanychoco.db.DbConnector;
-import io.simplon.toomanychoco.model.Event;
-import io.simplon.toomanychoco.model.User;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+import io.simplon.toomanychoco.db.DbConnector;
+import io.simplon.toomanychoco.model.Event;
+import io.simplon.toomanychoco.model.User;
 
 public class EventRespository {
     private static final EventRespository instance = new EventRespository();
@@ -41,13 +44,13 @@ public class EventRespository {
                 int event_id = resultSet.getInt("event_id");
                 User creator = UserRepository.getInstance().findByUsername(resultSet.getString("username")).orElse(null);
                 List<String> pastry_list = new ArrayList<>();
-
+                
                 do {
                     String pastry_name = resultSet.getString("pastry_name");
                     pastry_list.add(pastry_name);
                 } while (resultSet.next());
 
-                return Optional.of(new Event(event_date, event_id, creator, pastry_list));
+                return Optional.of(new Event(event_id, event_date, creator, pastry_list));
             } else {
                 return Optional.empty();
             }

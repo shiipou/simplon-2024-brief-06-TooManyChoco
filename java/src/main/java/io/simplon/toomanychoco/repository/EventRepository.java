@@ -25,7 +25,7 @@ public class EventRepository {
 
     // ---------------------------------------------------------------------------------------------------------
 
-    private static final String SQL_FIND_ALL = "SELECT e.event_date, e.event_id , u.username , p.pastry_name FROM event e JOIN users u ON e.creator = username JOIN event_pastry ep ON e.event_id = ep.event_id JOIN pastry p ON ep.pastry_id = p.pastry_id ORDER BY e.event_date";
+    private static final String SQL_FIND_ALL = "SELECT e.event_date, e.event_id , u.username , e.isAnonyme, p.pastry_name FROM event e JOIN users u ON e.creator = username JOIN event_pastry ep ON e.event_id = ep.event_id JOIN pastry p ON ep.pastry_id = p.pastry_id ORDER BY e.event_date";
     /* private static final String SQL_POST_EVENT = "INSERT INTO event (event_date, creator, pastries) VALUES (?, ?)"; */
     
 
@@ -49,13 +49,15 @@ public class EventRepository {
 
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL);) {
             ResultSet resultSet = statement.executeQuery();
+            System.out.println("resultset : " + resultSet.toString());
 
             while(resultSet.next()) {
                 Date event_date = resultSet.getDate("event_date");
-                User creator = UserRepository.getInstance().findByUsername(resultSet.getString("creator")).get();
-                Integer event_id = resultSet.getInt("event_id");
+                User creator = UserRepository.getInstance().findByUsername(resultSet.getString("username")).get();
+                int event_id = resultSet.getInt("event_id");
                 List<Pastry> pastries = getPastryByEventId(event_id);
-                events.add(new Event(event_id, event_date, creator, pastries ));
+                boolean isAnonyme = resultSet.getBoolean("isAnonyme");
+                events.add(new Event(event_id, event_date, creator, pastries, isAnonyme));
             }                
         
         } catch (SQLException e) {
@@ -69,7 +71,7 @@ public class EventRepository {
     // ---------------------------------------------------------------------------------------------------------
     
     public void save(Event event, List<Pastry> pastries) throws SQLException {
-        String insertEventSQL = "INSERT INTO event (event_date, creator) VALUES (?, ?) RETURNING event_id";
+        String insertEventSQL = "INSERT INTO event (event_date, creator, isAnonyme) VALUES (?, ?, ?) RETURNING event_id";
         String insertEventPastrySQL = "INSERT INTO event_pastry (event_id, pastry_id) VALUES (?, ?)";
     
         try (
@@ -80,6 +82,7 @@ public class EventRepository {
             java.sql.Date formattedDate = java.sql.Date.valueOf(DateFormat.getDateInstance(DateFormat.SHORT, Locale.ROOT).format(event.getEvent_date()));
             statementEvent.setDate(1, formattedDate);
             statementEvent.setString(2, event.getCreator().getUsername());
+            statementEvent.setBoolean(3, event.getIsAnonyme());
             ResultSet resultSet = statementEvent.executeQuery();
             resultSet.next();
             int eventId = resultSet.getInt("event_id");
