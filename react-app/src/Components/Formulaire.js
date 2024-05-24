@@ -26,8 +26,8 @@ export default function Formulaire(props) {
   let nouveauChoixInput = useRef();
 
   // sera utilisé par la suite
-  let [user, setUser] = useState('bob');
-  let [event_date, setEvent_date] = useState("2024-05-26");
+  let [user, setUser] = useState(sessionStorage.getItem("username"));
+  let [event_date, setEvent_date] = useState("2024-06-03");
 
   let [anonyme, setAnonyme] = useState(false);
 
