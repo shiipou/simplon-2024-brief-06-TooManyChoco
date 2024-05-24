@@ -9,11 +9,10 @@ import LoginForm from "./LoginForm";
 function CalendarContainer() {
   const [date, setDate] = useState(new Date());
   const navigate = useNavigate();
- 
- 
-  sessionStorage.getItem("username") ?? navigate("/");
-  
   const [events, setEvents] = useState([]);
+ 
+  
+  
   useEffect(() => {
     fetch('http://localhost:8080/events')
       .then((res) => res.json())

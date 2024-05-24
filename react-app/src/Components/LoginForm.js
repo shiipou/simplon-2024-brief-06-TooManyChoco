@@ -22,7 +22,10 @@ const LoginForm = () => {
 
         if (user) {
           // setUserToken(user.token);
+          console.log("ok");
           navigate("/");
+        } else {
+          console.log("error");
         }
       }
     },
