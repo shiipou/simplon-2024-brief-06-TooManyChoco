@@ -88,8 +88,8 @@ public class App {
             }
         }));
 
-        // Handler endpoint POST createUser ('/create/user')
-        server.createContext("/create/user", withCORS(request -> {
+        // Handler endpoint POST createUser ('/users')
+        server.createContext("/users", withCORS(request -> {
             if (request.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
                 request.sendResponseHeaders(204, -1);
                 return;
@@ -106,8 +106,15 @@ public class App {
                 // Réponse au client
                 request.sendResponseHeaders(201, 0);
                 request.getResponseBody().close();
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
+                String response = e.getMessage();
+                request.sendResponseHeaders(400, response.getBytes().length);  //400 Bad Request
+                request.getResponseBody().write(response.getBytes());
+                request.getResponseBody().close();
+            } catch(Exception e) {
+                e.printStackTrace();
+                request.sendResponseHeaders(500,-1); // 500 internal error server
             }
         }));
 

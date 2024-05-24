@@ -92,7 +92,7 @@ public class UserRepository {
         }
     }
 
-    public void createUser(User user) {
+    public void createUser(User user) throws SQLException {
         try (
                 PreparedStatement statement = connection.prepareStatement(SQL_CREATE_USER);) {
             statement.setString(1, user.getUsername());
@@ -100,8 +100,10 @@ public class UserRepository {
             statement.setString(3, user.getEmail());
             statement.setString(4, user.getPassword());
             statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            throw new SQLException("Error creating user" + e.getMessage());
+//        }
     }
 }
