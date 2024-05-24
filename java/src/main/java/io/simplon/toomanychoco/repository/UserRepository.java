@@ -100,9 +100,10 @@ public class UserRepository {
             statement.setString(3, user.getEmail());
             statement.setString(4, user.getPassword());
             statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new SQLException("Error creating user" + e.getMessage());
         }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            throw new SQLException("Error creating user" + e.getMessage());
+//        }
     }
 }

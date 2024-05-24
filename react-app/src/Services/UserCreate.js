@@ -1,4 +1,4 @@
-export function UserCreate(pseudo, prenom, email, password) {
+export async function userCreate(pseudo, prenom, email, password) {
   // Créez une requête avec l'URL cible
   const url = "http://localhost:8080/users";
   const myRequest = new Request(url);
@@ -9,24 +9,55 @@ export function UserCreate(pseudo, prenom, email, password) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
+      body: JSON.stringify({
       username: pseudo,
       firstname: prenom,
       email: email,
-      password: password,
-    }),
+      password: password
+    })
   };
 
   // Effectuez la requête
-  fetch(myRequest, myInit)
-    .then((response) => {
-      // Vérifiez si la réponse est OK (statut 200-299)
-      console.log(response.status);
-      if(!response) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-    })
-    .catch((error) => {
-      console.log(error.response)
-    });
+  try{
+
+    // Effectuez la requête en utilisant await
+    const response = await fetch(myRequest, myInit);
+    
+    // Vérifiez si la réponse est correcte
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message);
+    }
+
+    // Récupérez les données JSON de la réponse
+    const data = await response.json();
+    console.log(data);
+    alert("User created successfully: " + data);
+    
+    // Retournez les données si nécessaire
+    return data;
+  } catch (error) {
+    console.error('Error:', error.message);
+    alert(`Error: ${error.message}`);
+    // Vous pouvez choisir de relancer l'erreur si vous voulez gérer cela ailleurs
+    throw error;
+  }
 }
+  
+  // fetch(myRequest, myInit)
+  //   .then((response) => {
+  //     if(!response.ok){
+  //       return response.json().then((error) => {throw new Error(error.message)});
+  //     }
+  //     return response.json();
+  //   })
+  //   .then((data) => {
+  //     console.log(data);
+  //     alert("User created successfully: ",data);
+  //   })
+  //   .catch((error) => {
+  //     console.error('Error:', error.message);
+  //     alert(`Error: ${error.message}`);
+  //   });
+   
+

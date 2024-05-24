@@ -108,7 +108,14 @@ public class App {
                 request.sendResponseHeaders(201, 0);
                 request.getResponseBody().close();
             } catch (SQLException e) {
-                request.sendResponseHeaders(500, 0);
+                e.printStackTrace();
+                String response = e.getMessage();
+                request.sendResponseHeaders(400, response.getBytes().length);  //400 Bad Request
+                request.getResponseBody().write(response.getBytes());
+                request.getResponseBody().close();
+            } catch(Exception e) {
+                e.printStackTrace();
+                request.sendResponseHeaders(500,-1); // 500 internal error server
             }
         }));
 

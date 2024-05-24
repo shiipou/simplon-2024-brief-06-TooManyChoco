@@ -1,42 +1,35 @@
 // NewAccount.js
 import React, { useCallback, useState } from 'react';
 import './NewAccount.css';
-import { userCreate } from '../Services/userCreate';
+
 import { useNavigate } from "react-router-dom";
+import { userCreate } from '../Services/userCreate';
 
 
-
-const NewAccount = () => {
+function NewAccount() {
   const navigate = useNavigate();
+  const [pseudo, setPseudo] = useState('');
+  const [prenom, setPrenom] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
 
 
-  const handleSubmitRegister = useCallback(
-    async (e) => {
-      e.preventDefault();
-  
-      //récupérer les données du formulaire
-      const { pseudo, prenom, email, password } = Object.fromEntries(
-        new FormData(e.target)
-      );
-  
-      //envoie dans l'api pour stocker les données dans notre BDD
-      if(pseudo && prenom && email && password) {
-        
-        try{
-          await userCreate(pseudo, prenom, email, password);
-          navigate("/login");
-          alert('User created successfully!');
-        } catch (error){
-          alert(error.message)
-        }
-        
-      //ça signale que la création a bien été prise en compte
 
-
-      }
-    }
-  
-  )
+async function handleSubmitRegister(){
+  try {
+    //récupérer les données du formulaire
+    const { pseudo, prenom, email, password } = Object.fromEntries(
+      new FormData(e.target)
+    );
+    await userCreate(pseudo, prenom, email, password);
+    setError(null); // Réinitialiser l'erreur en cas de succès
+    alert('User created successfully!');
+  } catch (error) {
+    setError(error.message);
+    console.log(error); // Mettre à jour l'erreur en cas d'échec
+  }
+}
 
    return (
    <div className="main-container">
@@ -61,9 +54,14 @@ const NewAccount = () => {
          </div>
          <button type="submit">S'enregistrer</button>
        </form>
-     </div>
-     </div>
+      </div>
+       
+      <div>
+      {error && <p style={{ color: 'red' }}>{error}</p>} {/* Affiche le message d'erreur */}
+      </div>
+    </div>
    );
- }
+}
+ 
 
 export default NewAccount;
