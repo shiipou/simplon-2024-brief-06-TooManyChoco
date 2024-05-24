@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useContext } from "react";
 import Calendar from "react-calendar";
 import "./CalendarContainer.css";
@@ -7,6 +6,8 @@ import "react-calendar/dist/Calendar.css";
 import { DateContext } from "../Providers/DateContext";
 import { useNavigate } from "react-router-dom";
 import moment from 'moment-timezone';
+import LoginForm from "./LoginForm";
+import DetailsCard from "./DetailsCard";
 
 
 function CalendarContainer() {
@@ -23,8 +24,11 @@ function CalendarContainer() {
   const handleDayClick = (date) => {
     const selectedDate = moment(date).tz('Europe/Paris').format('YYYY-MM-DD');
     console.log('Date formatée:', selectedDate);
-    navigate(`/details/${selectedDate}`);    
+    navigate(`/details/${selectedDate}`);
+    
   };
+
+  sessionStorage.getItem("username") ?? navigate("/");
 
   const [events, setEvents] = useState([]);
   useEffect(() => {
@@ -37,19 +41,21 @@ function CalendarContainer() {
       })
       .catch((error) => console.error("Error fetching events:", error));
   }, []);
-
+  
   return (
-    <div className="calendar-container myCustomCalendar">
-      {/* utilisation de la méthode Calendar dispo dans React */}
-      <Calendar
-        onChange={setDate}
-        onClickDay={handleDayClick}
-        value={date}
-        // tileClassName={ date =>
-          // date?.includes(date.toDateString()) ? "reserved" : ""
-        // }
-      />
-    </div>
+
+    (sessionStorage.getItem("username") ? <div className="calendar-container myCustomCalendar">
+    {/* utilisation de la méthode Calendar dispo dans React */}
+    <Calendar
+      onChange={setDate}
+      onClickDay={handleDayClick}
+      value={date}
+      tileClassName={({ date }) =>
+        events.includes(date.toDateString()) ? "reserved" : ""
+      }
+    />
+  </div> : <LoginForm />)
+
   );
 }
 

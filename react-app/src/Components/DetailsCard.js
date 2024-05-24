@@ -5,16 +5,30 @@ import { GiCroissant } from "react-icons/gi"; // Icône croissant
 import "./DetailsCard.css"; // Style pour DetailsCard
 import { DateContext } from "../Providers/DateContext";
 import { useContext } from "react";
+import getEventDetails from "../Services/eventService";
 
 
 function DetailsCard() {
-  const {date} = useContext(DateContext);
-  // Initialisation des informations de l'événement avec des données factices
-  const [eventInfo, setEventInfo] = useState({
-    // firstName: "Foo Bar",
-    // date: "2024-05-16",
-    // viennoiseries: [{ name: "miamiam" }, { name: "nomnom" }],
-  });
+const {date, setDate} = useContext(DateContext);
+const [eventInfo, setEventInfo] = useState({});
+
+
+// 1. Obtenir le chemin de l'URL
+const path = document.location.pathname;
+
+// 2. Extraire la date du chemin
+function getDateFromPath(path) {
+    const segments = path.split('/'); // Divise le chemin en segments
+    return segments[segments.length - 1]; // Retourne le dernier segment (la date)
+}
+
+// 3. Stocker la date dans une variable
+let dateParam = getDateFromPath(path);
+
+// je met à jour la date dans le dateContext
+setDate(dateParam);
+console.log("date récupérée :" + date);
+
   
   // Jours de la semaine à afficher
   const WeekDays = [
@@ -28,7 +42,7 @@ function DetailsCard() {
   ];
   // Effet pour charger les données de l'événement (commenté pour le moment)
   useEffect(() => {
-    handleFetch(date).then((data) => {
+    getEventDetails(date).then((data) => {
       setEventInfo(data);
     });
   });
